@@ -1,0 +1,1116 @@
+
+<!DOCTYPE html>
+<html lang="en">   
+    
+    <head>
+
+        <meta charset="UTF-8">
+        <title>2ⁿ</title>
+        <meta lang="en">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+        <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+        <link rel="icon" type="image/png" sizes="256x256" href="favicon.png"/>
+        <meta name="theme-color" content="#000000"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap" rel="stylesheet">
+        <meta property="og:title" content="2ⁿ"/>
+        <meta property="og:description" content="2ⁿ game">
+        <meta property="twitter:title" content="2ⁿ"/>
+        <meta property="twitter:description" content="2ⁿ game">
+    
+    </head>
+
+    <style>
+
+        :root {
+
+            --accent-color: rgb(40, 40, 40);
+            --background-color: white;
+            --text-color: black;
+            --box-background: white;
+            --box-size: 60px;
+            --box-margin: 5px;
+            --box-border-radius: 6px;
+            --block-font-size: 24px;
+            --block-transitions: top 120ms cubic-bezier(0.7, 0, 0.3, 1), left 120ms cubic-bezier(0.7, 0, 0.3, 1), transform 120ms cubic-bezier(0.7, 0, 0.3, 1), background-color 240ms cubic-bezier(0.7, 0, 0.3, 1), color 240ms cubic-bezier(0.7, 0, 0.3, 1);
+            --play-board-background: black;
+            --power1-color: rgb(182, 215, 168);
+            --power2-color: rgb(147, 196, 125);
+            --power3-color: rgb(106, 168, 79);
+            --power4-color: rgb(234, 153, 153);
+            --power5-color: rgb(224, 102, 102);
+            --power6-color: rgb(204, 0, 0);
+            --power7-color: rgb(159, 197, 232);
+            --power8-color: rgb(111, 168, 220);
+            --power9-color: rgb(61, 133, 198);
+            --power10-color: rgb(249, 203, 156);
+            --power11-color: rgb(246, 178, 107);
+            --power12-color: rgb(230, 145, 56);
+            --power13-color: rgb(180, 167, 214);
+            --power14-color: rgb(142, 124, 195);
+            --power15-color: rgb(103, 78, 167);
+
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: var(--background-color);
+            text-align: center;
+            font-family: 'Exo 2', Arial;
+        }
+
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 8px 12px;
+            margin: 10px 16px;
+            font-family: inherit;
+            background-color: var(--accent-color);
+            border-radius: 9px;
+            border: none;
+            color: var(--background-color);
+            text-transform: uppercase;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            transition: transform 60ms cubic-bezier(0.7, 0, 0.3, 1), outline 60ms cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        hr {
+            opacity: 0.5;
+            margin: 5px 0;
+            border: none;
+            height: 3px;
+            background-color: var(--text-color);
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+
+        button:active {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        [id^=row] {
+            display: flex;
+        }
+
+        .box {
+            margin: var(--box-margin);
+            width: var(--box-size);
+            height: var(--box-size);
+            background-color: var(--box-background);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--box-border-radius);
+        }
+
+        input[type=range] {
+            /* appearance: none; */
+            cursor: pointer;
+            margin: 0 16px;
+            width: 100%;
+        }
+
+        /* input[type=range]::-webkit-slider-thumb, input[type=range]::-moz-slider-thumb {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            height: 20px;
+            width: 20px;
+        } */
+
+        [id$=-option] {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        [id$=-fab] {
+            position: fixed;
+            padding: 12px;
+            -webkit-box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.5);
+            -moz-box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.5);
+            box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.5);
+        }
+
+        .button-svg {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .block {
+            font-size: var(--block-font-size);
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            width: var(--box-size);
+            height: var(--box-size);
+            border-radius: var(--box-border-radius);
+            background-color: var(--power1-color);
+            color: white;
+            transform: scale(0);
+            transition: var(--block-transitions);
+        }
+
+        .expand-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .expand-head-container {
+            user-select: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .expand-head-container:hover {
+            filter: brightness(0.8);
+        }
+
+        .expand-title, .expand-svg {
+            vertical-align: middles;
+            margin: 10px;
+        }
+
+        .expand-svg {
+            transition: transform 200ms cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .expand-animator {
+            height: 0;
+            overflow: hidden;
+            transition: opacity 200ms linear, height 200ms cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .expand-content {
+            padding: 5px 0 5px 0;
+        }
+
+        .option-title {
+            width: -moz-fit-content;
+            width: fit-content;
+            flex-shrink: 0;
+            max-width: 120px;
+        }
+
+        .option-value {
+            text-align: center;
+            flex-shrink: 0;
+            width: 40px;
+            border-radius: 3px;
+            border-style: solid;
+        }
+
+        #game-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #play-fab {
+            bottom: 25px;
+            right: 25px;
+        }
+
+        #menu-fab{
+            z-index: 4;
+            left: 25px;
+        }
+
+        #play-board {
+            margin: 6px;
+            border: var(--box-margin) solid var(--play-board-background);
+            background-color: var(--play-board-background);
+            width: -moz-fit-content;
+            width: fit-content;
+            height: -moz-fit-content;
+            height: fit-content;
+        }
+
+        #game-score {
+            font-weight: 500;
+            font-size: 24px;
+            padding: 15px 10px 10px 10px;
+            transition: color 120ms cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        #dimmer {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: opacity 300ms linear;
+        }
+
+        #menu {
+            padding: 10px;
+            overflow-y: auto;
+            border-radius: 9px 9px 0 0;
+            z-index: 2;
+            background-color: var(--background-color);
+            position: fixed;
+            height: calc(100% + 9px);
+            margin: auto;
+            transition: transform 300ms cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        #game-container {
+            touch-action: pinch-zoom;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+    </style>
+
+    <body>
+
+        <!-- relative elements -->
+        <div id="game-container">
+            <div id="game-score">Score: <span id="game-score-value">0</span></div>
+            <div id="game-area">
+                <div id="play-board">
+                    <div id="grid-container">
+                    </div>
+                    <div id="blocks-container">
+                    </div>
+                </div>
+            </div> 
+            <div style="height: 111px;"></div>
+        </div>
+
+        <!-- fixed elements -->
+        <button type="button" id="play-fab" title="new game" onclick="startGame();">
+            <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"/></svg>
+        </button>
+        <button type="button" id="menu-fab" title="open menu" onclick="menu.open();">
+            <svg id="menu-fab-open-svg" style="transition: opacity 150ms linear;" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            <svg style="display: none; opacity: 0; transition: opacity 150ms linear;" id="menu-fab-close-svg" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+        <div id="dimmer" onclick="menu.open();"></div>
+        <div id="menu">
+            <div id="top-menu-fab-placeholder" style="height: 111px;"></div>
+            <h1>Configuration</h1>
+
+            <hr>
+            <div id="expand-info" class="expand-container">
+                <div class="expand-head-container" onclick="expandPart('info');">
+                    <svg id="expand-info-svg" class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
+                    <h2 class="expand-title">About game</h2>
+                    <svg class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                </div>
+                <div id="expand-info-animator" class="expand-animator">
+                    <div class="expand-content" style="text-align: left;" id="expand-info-content">
+                        <p>Do you know game called 2048? Well this is really the same concept, just with some enhancements here and there.<br>If you don't, just swipe your finger on the play board that looks like grid if you are using a device with touchscreen or use arrow keys or wsad if you are on desktop and you will learn the game quickly. The goal is to get as much score as possible before you fill the whole grid with blocks and cannot move with them anymore. How long that will take depends on how well you manage your blocks and connect them.<br>For added accessibility you can also just tap or click on side of the grid to move blocks.<br> Here in menu you can customize your game and see statistics.</p>
+                        <div style="height: 15px;"></div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div id="expand-configuration" class="expand-container">
+                <div class="expand-head-container" onclick="expandPart('configuration');">
+                    <svg id="expand-configuration-svg" class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
+                    <h2 class="expand-title">Configure</h2>
+                    <svg class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+                </div>
+                <div id="expand-configuration-animator" class="expand-animator">
+                    <div id="expand-configuration-content">
+                        <div id="grid-size-option">
+                            <span class="option-title">Grid size</span><input title="grid size" placeholder="grid size" oninput="saveConfiguration(this.id);" id="grid-size-range" type="range" max="6" min="2"><input oninput="saveConfiguration(this.id);" type="number" class="option-value" id="grid-size-value"></input>
+                        </div>
+                        <div id="box-margin-option">
+                            <span class="option-title">Box margin multiplier</span><input title="box margin multiplier" placeholder="box margin multiplier" oninput="saveConfiguration(this.id);" id="box-margin-range" type="range" max="20" min="0"><input oninput="saveConfiguration(this.id);" type="number" class="option-value" id="box-margin-value"></input>
+                        </div>
+                        <div id="box-border-radius-option">
+                            <span class="option-title">Box border radius multiplier</span><input title="box border radius" placeholder="box border radius" oninput="saveConfiguration(this.id);" id="box-border-radius-range" type="range" max="20" min="0"><input oninput="saveConfiguration(this.id);" type="number" class="option-value" id="box-border-radius-value"></input>
+                        </div>
+                        <div id="transitions-option">
+                            <span class="option-title">Transitions (animations) multiplier</span><input title="transitions" placeholder="transitions" oninput="saveConfiguration(this.id);" id="transitions-range" type="range" max="20" min="0"><input oninput="saveConfiguration(this.id);" type="number" class="option-value" id="transitions-value"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div id="bottom-menu-fab-placeholder" style="height: 111px;"></div>
+        </div>
+
+    </body>
+
+    <script type="text/javascript">
+
+        // setting up global objects
+        cssVariables = document.querySelector(":root");
+        expanded = {};
+        menu = {opened: false, style: null, open() {
+            dimmer = document.getElementById("dimmer");
+            menuElement = document.getElementById("menu");
+            openSvg = document.getElementById("menu-fab-open-svg");
+            closeSvg = document.getElementById("menu-fab-close-svg");
+            if (this.opened) {
+                menuElement.style.removeProperty("transform")
+                closeSvg.style.opacity = 0;
+                setTimeout(function() {
+                    closeSvg.style.display = "none";
+                    openSvg.style.display = "block";
+                    setTimeout(function() {
+                        openSvg.style.opacity = 1;
+                    }, 10);
+                }, 160);
+                dimmer.style.opacity = 0;
+                setTimeout(function() {
+                    dimmer.style.display = "none";
+                }, 310);
+                this.opened = false;
+            } else {
+                dimmer.style.display = "block";
+                setTimeout(function() {
+                    dimmer.style.opacity = 1;
+                }, 10);
+                if (this.style == "bottom") {
+                    menuElement.style.transform = "translateY(calc(-100% + 9px))";
+                } else {
+                    menuElement.style.transform = "translateX(420px)";
+                }
+                openSvg.style.opacity = 0;
+                setTimeout(function() {
+                    openSvg.style.display = "none";
+                    closeSvg.style.display = "block";
+                    setTimeout(function() {
+                        closeSvg.style.opacity = 1;
+                    }, 10);
+                }, 160);
+                setTimeout(function() {
+                }, 300);
+                this.opened = true;
+            }
+        }, updateStyle() {
+            menuFab = document.getElementById("menu-fab");
+            menuElement = document.getElementById("menu");
+            menuForceClosed = false;
+            if (innerWidth > innerHeight && innerWidth > 450 && this.style != "side") {
+                menuFab.style.bottom = "";
+                menuFab.style.top = "25px";
+                if (this.opened) {
+                    this.open();
+                    menuForceClosed = true;
+                }
+                menuElement.style.top = "0";
+                menuElement.style.bottom = "0";
+                menuElement.style.left = "-420px";
+                menuElement.style.removeProperty("right");
+                menuElement.style.width = "400px";
+                menuElement.style.height = "100%";
+                menuElement.style.borderRadius = "0";
+                document.getElementById("bottom-menu-fab-placeholder").style.display = "none";
+                document.getElementById("top-menu-fab-placeholder").style.height = "111px";
+                this.style = "side";
+            } else if ((innerWidth <= innerHeight || innerWidth <= 450) && this.style != "bottom") {
+                menuFab.style.removeProperty("top");
+                menuFab.style.bottom = "25px";
+                if (this.opened) {
+                    this.open();
+                    menuForceClosed = true;
+                }
+                menuElement.style.left = "0";
+                menuElement.style.right = "0";
+                menuElement.style.top = "100%";
+                menuElement.style.removeProperty("bottom");
+                menuElement.style.removeProperty("width");
+                menuElement.style.height = "calc(100% + 9px)";
+                menuElement.style.removeProperty("border-radius");
+                document.getElementById("bottom-menu-fab-placeholder").style.display = "block";
+                document.getElementById("top-menu-fab-placeholder").style.height = "85px";
+                this.style = "bottom";
+            }
+            if (menuForceClosed) {
+                setTimeout(function() {
+                    menu.open();
+                }, 310);
+            }
+        }};
+
+        if (navigator.cookieEnabled) {
+            storage = "localStorage";
+        } else {
+            storage = "globalStorage";
+        }
+
+        globalStorage = {getItem(id) {
+            return this.values[id];
+        }, setItem(id, value) {
+            this.values[id] = value;
+        }, clear() {
+            for (item of Object.keys(this.values)) {
+                delete this.values[item];
+            }
+        }, values: {}}
+
+        move = {powerUpBlockPairs: [], nothingMoved: true};
+        statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, moves: 0, blocksPowered: 0};
+        configuration = {};
+        unApplyedConfiguration = {};
+
+        if (window[storage].getItem("storageUsed") == null) {
+            window[storage].setItem("storageUsed", 1);
+            resetStorage();
+        } else {
+            restoreStorage();
+        }
+
+        Object.assign(unApplyedConfiguration, configuration);
+
+        addEventListener("keydown", function(e) {
+            if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+                e.preventDefault();
+            }
+        }, false);
+
+        addEventListener("keyup", function() {
+            switch (event.key) {
+                case "ArrowRight":
+                case "d":
+                    moveBlocks("right");
+                    break;
+                case "ArrowUp":
+                case "w":
+                    moveBlocks("up");
+                    break;
+                case "ArrowLeft":
+                case "a":
+                    moveBlocks("left");
+                    break;
+                case "ArrowDown":
+                case "s":
+                    moveBlocks("down");
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        if (matchMedia("(pointer: coarse)")) {
+            document.getElementById("game-container").addEventListener("swiped-right", function(positions) {
+            moveBlocks("right");
+            });
+            document.getElementById("game-container").addEventListener("swiped-up", function(positions) {
+                moveBlocks("up");
+            });
+            document.getElementById("game-container").addEventListener("swiped-left", function(positions) {
+                moveBlocks("left");
+            });
+            document.getElementById("game-container").addEventListener("swiped-down", function(positions) {
+                moveBlocks("down");
+            });
+        }
+
+        addEventListener("resize", function() {
+            renderPlayBoard();
+            updateBoard();
+            menu.updateStyle()
+        });
+
+        document.getElementById("play-board").addEventListener("click", function() {
+            x = event.clientX-this.getBoundingClientRect().left;
+            y = event.clientY-this.getBoundingClientRect().top;
+            playBoardSize = getComputedStyle(this).width.replace("px", "")*1;
+            if (x > y && playBoardSize-y > x) {
+                moveBlocks("up");
+            } else if (y > x && playBoardSize-x > y) {
+                moveBlocks("left");
+            } else if (x > playBoardSize-y && y > x) {
+                moveBlocks("down");
+            } else if (y > playBoardSize-x && x > y) {
+                moveBlocks("right");
+            }
+        });
+
+        // setInterval(function() {
+        //     random = getRandomNumber(1, 4);
+        //     switch (random) {
+        //         case 1:
+        //             moveBlocks("right");
+        //             break;
+        //         case 2:
+        //             moveBlocks("up");
+        //             break;
+        //         case 3:
+        //             moveBlocks("left");
+        //             break;
+        //         case 4:
+        //             moveBlocks("down");
+        //         default:
+        //             break;
+        //     }
+        // }, 150);
+
+        updateConfigurationValuesInHTML("value");
+        updateConfigurationValuesInHTML("range");
+        menu.updateStyle();
+        startGame();
+
+        function expandPart(expanderId) {
+            expandContent = document.getElementById(`expand-${expanderId}-content`);
+            if (typeof expanded[expanderId] == "undefined") {
+                expanded[expanderId] = false;
+            }
+            if (!expanded[expanderId]) {
+                expanded[expanderId] = true;
+                document.getElementById(`expand-${expanderId}-svg`).style.transform = "rotate(0.5turn)";
+                document.getElementById(`expand-${expanderId}-animator`).style.height = (getComputedStyle(expandContent).height.replace("px", "")*1)+5 + "px";
+            } else {
+                expanded[expanderId] = false;
+                document.getElementById(`expand-${expanderId}-svg`).style.transform = "";
+                document.getElementById(`expand-${expanderId}-animator`).style.height = "";
+            }
+        }
+
+        function renderPlayBoard() {
+            cssVariables.style.setProperty("--box-size", "0");
+            if (innerWidth > innerHeight) {
+                boardSize = innerHeight*0.6;
+            } else {
+                boardSize = innerWidth*0.7;
+            }
+            boxMargin = ((boardSize/configuration.gridSize)/15)*configuration.boxMargin;
+            cssVariables.style.setProperty("--box-margin", `${boxMargin}px`);
+            cssVariables.style.setProperty("--box-size", `${(boardSize-(boxMargin*configuration.gridSize*2)-((boxMargin*2)/configuration.gridSize))/configuration.gridSize}px`);
+            cssVariables.style.setProperty("--block-font-size", `${(boardSize/configuration.gridSize)/2.5}px`);
+            boxBorderRadius = ((boardSize/configuration.gridSize)/10)*configuration.boxBorderRadius;
+            cssVariables.style.setProperty("--box-border-radius", `${boxBorderRadius}px`);
+            document.getElementById("play-board").style.borderRadius = `${Math.pow(configuration.gridSize, 1/2)*boxBorderRadius}px`;
+        }
+
+        function saveConfiguration(fromElement) {
+            fromElement = fromElement.substring(fromElement.length-5, fromElement.length);
+            if (fromElement != "range") {
+                divider = 1;
+            } else {
+                divider = 10;
+            }
+            unApplyedConfiguration.gridSize = document.getElementById(`grid-size-${fromElement}`).value;
+            unApplyedConfiguration.boxMargin = document.getElementById(`box-margin-${fromElement}`).value/divider;
+            unApplyedConfiguration.boxBorderRadius = document.getElementById(`box-border-radius-${fromElement}`).value/divider;
+            unApplyedConfiguration.transitions = document.getElementById(`transitions-${fromElement}`).value/divider;
+            window[storage].setItem("configuration", JSON.stringify(unApplyedConfiguration));
+            updateConfigurationValuesInHTML(fromElement);
+        }
+
+        function updateConfigurationValuesInHTML(fromElement) {
+            if (fromElement != "range") {
+                fromElement = "range"
+                multiplier = 10;
+            } else {
+                multiplier = 1;
+                fromElement = "value";
+            }
+            document.getElementById(`grid-size-${fromElement}`).value = unApplyedConfiguration.gridSize;
+            document.getElementById(`box-margin-${fromElement}`).value = unApplyedConfiguration.boxMargin*multiplier;
+            document.getElementById(`box-border-radius-${fromElement}`).value = unApplyedConfiguration.boxBorderRadius*multiplier;
+            document.getElementById(`transitions-${fromElement}`).value = unApplyedConfiguration.transitions*multiplier;
+        }
+
+        function startGame() {
+            Object.assign(configuration, unApplyedConfiguration);
+            statistics.score = 0;
+            statistics.moves = 0;
+            statistics.blocksPowered = 0;
+            document.getElementById("game-score-value").innerHTML = statistics.score;
+            globalThis.blocks = [];
+            document.getElementById("blocks-container").innerHTML = "";
+            document.getElementById("grid-container").innerHTML = "";
+            configureGameSetup();
+            renderPlayBoard();
+            createBlock(1);
+            createBlock(1);
+            updateBoard();
+        }
+
+        function restoreStorage() {
+            Object.assign(configuration, JSON.parse(window[storage].getItem("configuration")));
+        }
+
+        function resetStorage() {
+            configuration = {gridSize: 4, transitions: 1, boxBackground: "white", boxBorderRadius: 0.5, boxMargin: 1, playAreaBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
+        }
+
+        function configureGameSetup() {
+            // console.log(`configuring game setup: ${JSON.stringify(configuration)}`);
+
+            // console.log("setting play board styles");
+            cssVariables.style.setProperty("--box-background", `${configuration.boxBackground}`);
+            cssVariables.style.setProperty("--play-board-background", `${configuration.playAreaBackground}`);
+            cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), left ${120*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), transform ${120*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), background-color ${240*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), color ${240*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1)`);
+            for ([index, color] of configuration.powerColors) {
+                cssVariables.style.setProperty(`power${index+1}-color`, `${color}`);
+            }
+
+            // console.log("writing play board grid");
+            gridContainer = document.getElementById("grid-container");
+            for (row = 0; row < configuration.gridSize; row++) {
+                rowElement = document.createElement("div");
+                rowElement.id = `row${row}`;
+                gridContainer.appendChild(rowElement);
+                // console.log(`created row ${row}`);
+                for (box = 0; box < configuration.gridSize; box++) {
+                    boxElement = document.createElement("div");
+                    boxElement.id = `box${row}-${box}`;
+                    boxElement.setAttribute("class", "box");
+                    rowElement.appendChild(boxElement);
+                    // console.log(`created box ${box} in row ${row}`);
+                }
+            }
+        }
+
+        function checkMoveOptions(x, y, direction) {
+            // console.log(`reading ${x},${y}`);
+            canMove = false;
+            powerUp = false;
+            localBlock = getBlockFromPosition(x, y);
+            if (localBlock !== false) {
+                // console.log(`found local block ${blocks[localBlock].element.id}`);
+                moveSteps = 1;
+                obstructingBlock = false;
+                while (obstructingBlock === false && ((direction == "right" && moveSteps+y < configuration.gridSize) || (direction == "up" && x-moveSteps >= 0) || (direction == "left" && y-moveSteps >= 0) || (direction == "down" && moveSteps+x < configuration.gridSize))) {
+                    // console.log(`checking move to ${direction} by ${moveSteps}`);
+                    switch (direction) {
+                        case "right":
+                            obstructingBlock = getBlockFromPosition(x, y+moveSteps);
+                            break;
+                        case "up":
+                            obstructingBlock = getBlockFromPosition(x-moveSteps, y);
+                            break;
+                        case "left":
+                            obstructingBlock = getBlockFromPosition(x, y-moveSteps);
+                            break;
+                        case "down":
+                            obstructingBlock = getBlockFromPosition(x+moveSteps, y);
+                            break;
+                        default:
+                            break;
+                    }
+                    moveSteps++;
+                }
+                if (obstructingBlock !== false) {
+                    // console.log(`found obstructing block ${blocks[obstructingBlock].element.id} in ${direction}`);
+                    if (blocks[obstructingBlock].power == blocks[localBlock].power) {
+                        // console.log(`obstructing block has same power of ${blocks[localBlock].power}`);
+                        canMove = true;
+                        powerUp = true;
+                        blocks[localBlock].element.style.zIndex = 0;
+                    } else if (moveSteps > 2) {
+                        // console.log(`moving as far as possible before obstructing block`);
+                        canMove = true;
+                        moveSteps--;
+                    }
+                } else {
+                    canMove = true;
+                }
+                if (canMove) {
+                    moveBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps);
+                }
+            }  
+        }
+
+        function moveBlocks(direction) {
+            // console.log(`moving blocks ${direction}`);
+            move.nothingMoved = true;
+            switch (direction) {
+                case "right":
+                    for (y = configuration.gridSize-2; y >= 0; y--) {
+                        for (x = 0; x < configuration.gridSize; x++) {
+                            checkMoveOptions(x, y, direction);
+                        }
+                    }
+                    break;
+                case "up":
+                    for (x = 1; x < configuration.gridSize; x++) {
+                        for (y = 0; y < configuration.gridSize; y++) {
+                            checkMoveOptions(x, y, direction);
+                        }
+                    }
+                    break;
+                case "left":
+                    for (y = 1; y < configuration.gridSize; y++) {
+                        for (x = configuration.gridSize-1; x >= 0; x--) {
+                            checkMoveOptions(x, y, direction);
+                        }
+                    }
+                    break;
+                case "down":
+                    for (x = configuration.gridSize-2; x >= 0; x--) {
+                        for (y = configuration.gridSize-1; y >= 0; y--) {
+                            checkMoveOptions(x, y, direction);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            // console.log("moving blocks finalized");
+            blocksLog = "";
+            for (block of blocks) {
+                blocksLog += ` ${block.x}, ${block.y}, ${block.element.id};`;
+            }
+            // console.log(blocksLog);
+            if (!move.nothingMoved) {
+                updateBlock(createBlock(1));
+                statistics.moves++;
+            }
+        }
+
+        function moveBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps) {
+            move.nothingMoved = false;
+            // console.log(`moving block ${blocks[localBlock].element.id} ${direction} by ${moveSteps-1} steps`);
+            if (powerUp) {
+                blocks[obstructingBlock].power++;
+                statistics.blocksPowered++;
+                statistics.score += Math.pow(2, blocks[obstructingBlock].power)*Math.pow(10, 4-configuration.gridSize);
+                blocks[obstructingBlock].element.style.transform = "scale(1.2)";
+                blocks[obstructingBlock].element.style.backgroundColor = `var(--power${blocks[obstructingBlock].power}-color)`;
+                blocks[obstructingBlock].element.style.color = getReadableTextColor(configuration.powerColors[blocks[obstructingBlock].power-1]);
+                move.powerUpBlockPairs.push(blocks[localBlock], blocks[obstructingBlock]);
+                statistics.blocksToRemove.push(blocks[localBlock]);
+                // powerUpPairLog = "pushed powerUpBlockPair:";
+                // for (pair = 0; pair < move.powerUpBlockPairs.length; pair += 2) {
+                //     powerUpPairLog += ` ${move.powerUpBlockPairs[pair].x}, ${move.powerUpBlockPairs[pair].y}, ${move.powerUpBlockPairs[pair].element.id}; ${move.powerUpBlockPairs[pair].x}, ${move.powerUpBlockPairs[pair].y}, ${move.powerUpBlockPairs[pair].element.id}|`;
+                // }
+                // console.log(powerUpPairLog);
+                setTimeout(function() {
+                    document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
+                    updateBlock(move.powerUpBlockPairs[1]);
+                    move.powerUpBlockPairs[1].element.style.transform = "scale(1)";
+                    removeBlock(move.powerUpBlockPairs[0]);
+                    move.powerUpBlockPairs.splice(0, 2);
+                    statistics.blocksToRemove.splice(0, 1);
+                    // powerUpPairLog = "removed powerUpBlockPair:";
+                    // for (pair = 0; pair < move.powerUpBlockPairs.length; pair += 2) {
+                    //     powerUpPairLog += ` ${move.powerUpBlockPairs[pair].x}, ${move.powerUpBlockPairs[pair].y}, ${move.powerUpBlockPairs[pair].element.id}; ${move.powerUpBlockPairs[pair].x}, ${move.powerUpBlockPairs[pair].y}, ${move.powerUpBlockPairs[pair].element.id}|`;
+                    // }
+                    // console.log(powerUpPairLog);
+                }, (120*configuration.transitions)+10);
+            }
+            switch (direction) {
+                case "right":
+                    blocks[localBlock].y += moveSteps-1;
+                    break;
+                case "up":
+                    blocks[localBlock].x -= moveSteps-1;
+                    break;
+                case "left":
+                    blocks[localBlock].y -= moveSteps-1;
+                    break;
+                case "down":
+                    blocks[localBlock].x += moveSteps-1;
+                    break;
+                default:
+                    break;
+            }
+            updateBlock(blocks[localBlock]);
+        }
+
+        function removeBlock(blockObject) {
+            // console.log(`removing block ${blockObject.element.id}`);
+            blockObject.element.remove();
+            blockindex = 0;
+            for ([index, block] of blocks.entries()) {
+                if (blockObject == block) {
+                    blockIndex = index;
+                }
+            }
+            blocks.splice(blockIndex, 1);
+        }
+
+        function getBlockFromPosition(x, y) {
+            // console.log(`getting block from position ${x}, ${y}`);
+            blockIndex = false;
+            for ([index, block] of blocks.entries()) {
+                if (block.x == x && block.y == y) {
+                    // console.log(`${block.element.id} has same position of ${x}, ${y}, checking if it isn't about to be removed`);
+                    blockRemoved = false;
+                    for (blockToRemove of statistics.blocksToRemove) {
+                        if (blockToRemove == block) {
+                            blockRemoved = true;
+                        }
+                    }
+                    if (!blockRemoved) {
+                        if (blockIndex != false) {
+                            // console.error(`both blocks ${block.element.id} and ${blocks[blockIndex].element.id} were found on position ${x}, ${y}`);
+                        }
+                        // console.log(`${block.element.id} was not removed hence setting as a result`);
+                        blockIndex = index;
+                    }
+                }
+            }
+            return blockIndex;
+        }
+
+        function getReadableTextColor(backgroundRGB) {
+            backgroundRGB = backgroundRGB.match(/rgb\((\d*?), (\d*?), (\d*?)\)/);
+            R = backgroundRGB[1]*1;
+            G = backgroundRGB[2]*1;
+            B = backgroundRGB[3]*1;
+            if (R <= 10) {
+                Rg = R/3294;
+            } else {
+                Rg = Math.pow(R/269 + 0.0513, 2.4);
+            }
+            if (G <= 10) {
+                Gg = G/3294;
+            } else {
+                Gg = Math.pow(G/269 + 0.0513, 2.4);
+            }
+            if (B <= 10) {
+                Bg = B/3294;
+            } else {
+                Bg = Math.pow(B/269 + 0.0513, 2.4);
+            }
+            relativeLumninance = 0.2126 * Rg + 0.7152 * Gg + 0.0722 * Bg;
+            if (relativeLumninance < 0.5) {
+                return "white";
+            } else {
+                return "black";
+            }
+        }
+
+        function createBlock(power) {
+            do {
+                startX = getRandomNumber(0, configuration.gridSize-1);
+                startY = getRandomNumber(0, configuration.gridSize-1);
+            }
+            while (getBlockFromPosition(startX, startY) !== false);
+            blockElement = document.createElement("div");
+            blockElement.id = `block${statistics.blocksCreated}`;
+            blockElement.setAttribute("class", "block");
+            document.getElementById("blocks-container").appendChild(blockElement);
+            statistics.hiddenBlocks.push(blockElement);
+            setTimeout(function() {
+                statistics.hiddenBlocks[0].style.transform = "scale(1)";
+                statistics.hiddenBlocks.splice(0, 1);
+            }, 10);
+            blocks[blocks.length] = {x: startX, y: startY, power: power, element: blockElement};
+            blocks[blocks.length-1].element.style.color = getReadableTextColor(configuration.powerColors[blocks[blocks.length-1].power-1]);
+            statistics.blocksCreated++;
+            // console.log(`created play block ${blocks[blocks.length-1].element.id} on position ${startX}, ${startY} with power of ${power}`);
+            return blocks[blocks.length-1];
+        }
+
+        function updateBoard(transitions) {
+            // console.log("updating play board");
+            if (!transitions) {
+
+            }
+            for (block of blocks) {
+                updateBlock(block);
+            }
+        }
+
+        function updateBlock(block) {
+            // console.log(`updating block ${block.element.id}`);
+            block.element.style.top = document.getElementById(`box${block.x}-${block.y}`).getBoundingClientRect().top + scrollY + "px";
+            block.element.style.left = document.getElementById(`box${block.x}-${block.y}`).getBoundingClientRect().left + scrollX + "px";
+            block.element.innerHTML = Math.pow(2, block.power);
+            if (block.power > 9) {
+                if (innerWidth > innerHeight) {
+                    boardSize = innerHeight*0.65;
+                } else {
+                    boardSize = innerWidth*0.65;
+                }
+                if (block.power > 14) {
+                    sizeMultiplier = 0.65;
+                } else {
+                    sizeMultiplier = 0.8;
+                }
+                block.element.style.fontSize = `${((boardSize/configuration.gridSize)/2.5)*sizeMultiplier}px`;
+            }
+            block.element.style.color = getReadableTextColor(configuration.powerColors[block.power-1]);
+        }
+
+        function getRandomNumber(from, to) {
+            number = Math.round((Math.random()*(to+1-from))+(from-0.5))*1;
+            if (number == -0) {
+                number = 0;
+            }
+            return number;
+        }
+
+        // https://github.com/john-doherty/swiped-events
+        (function (window, document) {
+
+            'use strict';
+
+            // patch CustomEvent to allow constructor creation (IE/Chrome)
+            if (typeof window.CustomEvent !== 'function') {
+
+                window.CustomEvent = function (event, params) {
+
+                    params = params || { bubbles: false, cancelable: false, detail: undefined };
+
+                    var evt = document.createEvent('CustomEvent');
+                    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+                    return evt;
+                };
+
+                window.CustomEvent.prototype = window.Event.prototype;
+            }
+
+            document.addEventListener('touchstart', handleTouchStart, false);
+            document.addEventListener('touchmove', handleTouchMove, false);
+            document.addEventListener('touchend', handleTouchEnd, false);
+
+            var xDown = null;
+            var yDown = null;
+            var xDiff = null;
+            var yDiff = null;
+            var timeDown = null;
+            var startEl = null;
+
+            /**
+             * Fires swiped event if swipe detected on touchend
+             * @param {object} e - browser event object
+             * @returns {void}
+             */
+            function handleTouchEnd(e) {
+
+                // if the user released on a different target, cancel!
+                if (startEl !== e.target) return;
+
+                var swipeThreshold = parseInt(getNearestAttribute(startEl, 'data-swipe-threshold', '20'), 10); // default 20px
+                var swipeTimeout = parseInt(getNearestAttribute(startEl, 'data-swipe-timeout', '500'), 10);    // default 500ms
+                var timeDiff = Date.now() - timeDown;
+                var eventType = '';
+                var changedTouches = e.changedTouches || e.touches || [];
+
+                if (Math.abs(xDiff) > Math.abs(yDiff)) { // most significant
+                    if (Math.abs(xDiff) > swipeThreshold && timeDiff < swipeTimeout) {
+                        if (xDiff > 0) {
+                            eventType = 'swiped-left';
+                        }
+                        else {
+                            eventType = 'swiped-right';
+                        }
+                    }
+                }
+                else if (Math.abs(yDiff) > swipeThreshold && timeDiff < swipeTimeout) {
+                    if (yDiff > 0) {
+                        eventType = 'swiped-up';
+                    }
+                    else {
+                        eventType = 'swiped-down';
+                    }
+                }
+
+                if (eventType !== '') {
+
+                    var eventData = {
+                        dir: eventType.replace(/swiped-/, ''),
+                        touchType: (changedTouches[0] || {}).touchType || 'direct',
+                        xStart: parseInt(xDown, 10),
+                        xEnd: parseInt((changedTouches[0] || {}).clientX || -1, 10),
+                        yStart: parseInt(yDown, 10),
+                        yEnd: parseInt((changedTouches[0] || {}).clientY || -1, 10)
+                    };
+
+                    // fire `swiped` event event on the element that started the swipe
+                    startEl.dispatchEvent(new CustomEvent('swiped', { bubbles: true, cancelable: true, detail: eventData }));
+
+                    // fire `swiped-dir` event on the element that started the swipe
+                    startEl.dispatchEvent(new CustomEvent(eventType, { bubbles: true, cancelable: true, detail: eventData }));
+                }
+
+                // reset values
+                xDown = null;
+                yDown = null;
+                timeDown = null;
+            }
+
+            /**
+             * Records current location on touchstart event
+             * @param {object} e - browser event object
+             * @returns {void}
+             */
+            function handleTouchStart(e) {
+
+                // if the element has data-swipe-ignore="true" we stop listening for swipe events
+                if (e.target.getAttribute('data-swipe-ignore') === 'true') return;
+
+                startEl = e.target;
+
+                timeDown = Date.now();
+                xDown = e.touches[0].clientX;
+                yDown = e.touches[0].clientY;
+                xDiff = 0;
+                yDiff = 0;
+            }
+
+            /**
+             * Records location diff in px on touchmove event
+             * @param {object} e - browser event object
+             * @returns {void}
+             */
+            function handleTouchMove(e) {
+
+                if (!xDown || !yDown) return;
+
+                var xUp = e.touches[0].clientX;
+                var yUp = e.touches[0].clientY;
+
+                xDiff = xDown - xUp;
+                yDiff = yDown - yUp;
+            }
+
+            /**
+             * Gets attribute off HTML element or nearest parent
+             * @param {object} el - HTML element to retrieve attribute from
+             * @param {string} attributeName - name of the attribute
+             * @param {any} defaultValue - default value to return if no match found
+             * @returns {any} attribute value or defaultValue
+             */
+            function getNearestAttribute(el, attributeName, defaultValue) {
+
+                // walk up the dom tree looking for attributeName
+                while (el && el !== document.documentElement) {
+
+                    var attributeValue = el.getAttribute(attributeName);
+
+                    if (attributeValue) {
+                        return attributeValue;
+                    }
+
+                    el = el.parentNode;
+                }
+
+                return defaultValue;
+            }
+
+        }(window, document));
+
+    </script>
+
+</html>
