@@ -216,6 +216,7 @@
         }
 
         #game-area {
+            margin: 6px 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -242,10 +243,10 @@
             height: fit-content;
         }
 
-        #game-score {
+        #game-score, #game-highest-score {
             font-weight: 500;
             font-size: 24px;
-            padding: 15px 10px 10px 10px;
+            padding: 5px 10px 5px 10px;
             transition: color 120ms cubic-bezier(0.7, 0, 0.3, 1);
         }
 
@@ -277,6 +278,7 @@
         }
 
         #game-container {
+            padding-top: 10px;
             touch-action: pinch-zoom;
             position: fixed;
             left: 0;
@@ -292,7 +294,8 @@
 
         <!-- relative elements -->
         <div id="game-container">
-            <div id="game-score">Score: <span id="game-score-value">0</span></div>
+            <div id="game-score">Highest score: <span id="game-highest-score-value">0</span></div>
+            <div id="game-highest-score">Score: <span id="game-score-value">0</span></div>
             <div id="game-area">
                 <div id="play-board">
                     <div id="grid-container">
@@ -305,7 +308,7 @@
         </div>
 
         <!-- fixed elements -->
-        <button type="button" id="play-fab" title="new game" onclick="startGame();">
+        <button type="button" id="play-fab" title="new game" onclick="startNewGame();">
             <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"/></svg>
         </button>
         <button type="button" id="menu-fab" title="open menu" onclick="menu.open();">
@@ -473,15 +476,16 @@
         }, values: {}}
 
         move = {powerUpBlockPairs: [], nothingMoved: true};
-        statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, moves: 0, blocksPowered: 0};
+        statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScore: 0, moves: 0, blocksPowered: 0};
         configuration = {};
         unApplyedConfiguration = {};
+        blocks = [];
 
         if (window[storage].getItem("storageUsed") == null) {
-            window[storage].setItem("storageUsed", 1);
             resetStorage();
         } else {
             restoreStorage();
+            restoreGame();
         }
 
         Object.assign(unApplyedConfiguration, configuration);
@@ -573,7 +577,10 @@
         updateConfigurationValuesInHTML("value");
         updateConfigurationValuesInHTML("range");
         menu.updateStyle();
-        startGame();
+        if (window[storage].getItem("storageUsed") == null) {
+            window[storage].setItem("storageUsed", 1);
+            startNewGame();
+        }
 
         function expandPart(expanderId) {
             expandContent = document.getElementById(`expand-${expanderId}-content`);
@@ -636,13 +643,12 @@
             document.getElementById(`transitions-${fromElement}`).value = unApplyedConfiguration.transitions*multiplier;
         }
 
-        function startGame() {
+        function startNewGame() {
             Object.assign(configuration, unApplyedConfiguration);
-            statistics.score = 0;
-            statistics.moves = 0;
-            statistics.blocksPowered = 0;
-            document.getElementById("game-score-value").innerHTML = statistics.score;
-            globalThis.blocks = [];
+            statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScore: statistics.highestScore, moves: 0, blocksPowered: 0};
+            blocks = [];
+            document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
+            document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
             document.getElementById("blocks-container").innerHTML = "";
             document.getElementById("grid-container").innerHTML = "";
             configureGameSetup();
@@ -654,10 +660,27 @@
 
         function restoreStorage() {
             Object.assign(configuration, JSON.parse(window[storage].getItem("configuration")));
+            Object.assign(blocks, JSON.parse(window[storage].getItem("blocks")));
+            Object.assign(statistics, JSON.parse(window[storage].getItem("statistics")));
+        }
+
+        function restoreGame() {
+            document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
+            document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
+            document.getElementById("blocks-container").innerHTML = "";
+            document.getElementById("grid-container").innerHTML = "";
+            configureGameSetup();
+            renderPlayBoard();
+            statistics.hiddenBlocks = [];
+            for (block of blocks) {
+                block = restoreBlock(block);
+            }
+            updateBoard();
         }
 
         function resetStorage() {
             configuration = {gridSize: 4, transitions: 1, boxBackground: "white", boxBorderRadius: 0.5, boxMargin: 1, playAreaBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
+            window[storage].setItem("configuration", JSON.stringify(configuration));
         }
 
         function configureGameSetup() {
@@ -783,6 +806,8 @@
                 updateBlock(createBlock(1));
                 statistics.moves++;
             }
+            window[storage].setItem("blocks", JSON.stringify(blocks));
+            window[storage].setItem("statistics", JSON.stringify(statistics));
         }
 
         function moveBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps) {
@@ -792,6 +817,9 @@
                 blocks[obstructingBlock].power++;
                 statistics.blocksPowered++;
                 statistics.score += Math.pow(2, blocks[obstructingBlock].power)*Math.pow(10, 4-configuration.gridSize);
+                if (statistics.score > statistics.highestScore) {
+                    statistics.highestScore = statistics.score;
+                }
                 blocks[obstructingBlock].element.style.transform = "scale(1.2)";
                 blocks[obstructingBlock].element.style.backgroundColor = `var(--power${blocks[obstructingBlock].power}-color)`;
                 blocks[obstructingBlock].element.style.color = getReadableTextColor(configuration.powerColors[blocks[obstructingBlock].power-1]);
@@ -804,6 +832,7 @@
                 // console.log(powerUpPairLog);
                 setTimeout(function() {
                     document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
+                    document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
                     updateBlock(move.powerUpBlockPairs[1]);
                     move.powerUpBlockPairs[1].element.style.transform = "scale(1)";
                     removeBlock(move.powerUpBlockPairs[0]);
@@ -914,18 +943,31 @@
                 statistics.hiddenBlocks[0].style.transform = "scale(1)";
                 statistics.hiddenBlocks.splice(0, 1);
             }, 10);
-            blocks[blocks.length] = {x: startX, y: startY, power: power, element: blockElement};
+            blocks[blocks.length] = {x: startX, y: startY, power: power, element: blockElement, elementId: `block${statistics.blocksCreated}`};
             blocks[blocks.length-1].element.style.color = getReadableTextColor(configuration.powerColors[blocks[blocks.length-1].power-1]);
             statistics.blocksCreated++;
             // console.log(`created play block ${blocks[blocks.length-1].element.id} on position ${startX}, ${startY} with power of ${power}`);
             return blocks[blocks.length-1];
         }
 
+        function restoreBlock(block) {
+            blockElement = document.createElement("div");
+            blockElement.id = `block${block.elementId}`;
+            blockElement.setAttribute("class", "block");
+            blockElement.style.backgroundColor = `var(--power${block.power}-color)`;
+            blockElement.style.color = getReadableTextColor(configuration.powerColors[block.power-1]);
+            document.getElementById("blocks-container").appendChild(blockElement);
+            statistics.hiddenBlocks.push(blockElement);
+            setTimeout(function() {
+                statistics.hiddenBlocks[0].style.transform = "scale(1)";
+                statistics.hiddenBlocks.splice(0, 1);
+            }, 10);
+            block.element = blockElement;
+            return block
+        }
+
         function updateBoard(transitions) {
             // console.log("updating play board");
-            if (!transitions) {
-
-            }
             for (block of blocks) {
                 updateBlock(block);
             }
