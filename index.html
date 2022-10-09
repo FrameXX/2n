@@ -625,7 +625,6 @@
             unApplyedConfiguration.boxMargin = document.getElementById(`box-margin-${fromElement}`).value/divider;
             unApplyedConfiguration.boxBorderRadius = document.getElementById(`box-border-radius-${fromElement}`).value/divider;
             unApplyedConfiguration.transitions = document.getElementById(`transitions-${fromElement}`).value/divider;
-            window[storage].setItem("configuration", JSON.stringify(unApplyedConfiguration));
             updateConfigurationValuesInHTML(fromElement);
         }
 
@@ -645,6 +644,7 @@
 
         function startNewGame() {
             Object.assign(configuration, unApplyedConfiguration);
+            window[storage].setItem("configuration", JSON.stringify(configuration));
             statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScore: statistics.highestScore, moves: 0, blocksPowered: 0};
             blocks = [];
             document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
