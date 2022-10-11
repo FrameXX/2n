@@ -820,11 +820,13 @@
             startNewGame();
         }
 
-        splashscreen = document.getElementById("splashscreen");
-        splashscreen.style.opacity = 0;
         setTimeout(function() {
-            splashscreen.style.display = "none";
-        }, 170);
+            splashscreen = document.getElementById("splashscreen");
+            splashscreen.style.opacity = 0;
+            setTimeout(function() {
+                splashscreen.style.display = "none";
+            }, 170);
+        }, 100)
 
         function expandPart(expanderId) {
             expandContent = document.getElementById(`expand-${expanderId}-content`);
