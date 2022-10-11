@@ -35,7 +35,7 @@
             --box-scale: scale(0.98);
             --box-border-radius: 6px;
             --block-font-size: 24px;
-            --block-transitions: top 120ms cubic-bezier(0.7, 0, 0.3, 1), left 120ms cubic-bezier(0.7, 0, 0.3, 1), transform 120ms cubic-bezier(0.7, 0, 0.3, 1), background-color 240ms cubic-bezier(0.7, 0, 0.3, 1), color 240ms cubic-bezier(0.7, 0, 0.3, 1);
+            --block-transitions: top 120ms ease-in-out, left 120ms ease-in-out, transform 120ms ease-in-out, background-color 240ms ease-in-out, color 240ms ease-in-out;
             --play-board-background: rgb(40, 40, 40);
             --power1-color: rgb(182, 215, 168);
             --power2-color: rgb(147, 196, 125);
@@ -81,7 +81,7 @@
             justify-content: center;
             align-items: center;
             user-select: none;
-            transition: transform 60ms cubic-bezier(0.7, 0, 0.3, 1), outline 60ms cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 60ms ease-in-out, outline 60ms ease-in-out;
         }
 
         hr {
@@ -132,8 +132,6 @@
         [id$=-fab] {
             position: fixed;
             padding: 12px;
-            -webkit-box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.5);
-            -moz-box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.5);
             box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.5);
         }
 
@@ -193,13 +191,13 @@
         }
 
         .expand-svg {
-            transition: transform 200ms cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 200ms ease-in-out;
         }
 
         .expand-animator {
             height: 0;
             overflow: hidden;
-            transition: opacity 200ms linear, height 200ms cubic-bezier(0.7, 0, 0.3, 1);
+            transition: opacity 200ms linear, height 200ms ease-in-out;
         }
 
         .expand-content {
@@ -284,7 +282,7 @@
             font-weight: 500;
             font-size: 24px;
             padding: 5px 10px 5px 10px;
-            transition: color 120ms cubic-bezier(0.7, 0, 0.3, 1);
+            transition: color 120ms ease-in-out;
         }
 
         #dimmer {
@@ -311,7 +309,7 @@
             position: fixed;
             height: calc(100% + 9px);
             margin: auto;
-            transition: transform 300ms cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 300ms ease-in-out;
         }
 
         #game-container {
@@ -323,6 +321,147 @@
             top: 0;
             bottom: 0;
             margin: auto;
+        }
+
+        #splashscreen {
+            z-index: 5;
+            position: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(40, 40, 40);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            margin: auto;
+            transition: opacity 150ms linear;
+        }
+
+        #splash-block1, #splash-block2, #splash-block3, #splash-block4 {
+            width: 65px;
+            height: 65px;
+            border-radius: 9px;
+            background-color: white;
+            box-shadow: 0 0 8px 0 rgba(0,0,0,0.6);
+            position: absolute;
+        }
+
+        @keyframes splash-block1 {
+
+            0% {
+                z-index: 1;
+                transform: translate(-46px, -46px) scale(1.2);
+            }
+
+            25% {
+                z-index: 0;
+                transform: translate(-46px, 46px) scale(0);
+            }
+
+            50% {
+                z-index: 0;
+                transform: translate(-46px, -46px) scale(0);
+            }
+
+            75% {
+                z-index: 1;
+                transform: translate(-46px, -46px) scale(1);
+            }
+
+            100% {
+                z-index: 1;
+                transform: translate(-46px, -46px) scale(1.2);
+            }
+
+        }
+
+        @keyframes splash-block2 {
+
+            0% {
+                z-index: 1;
+                transform: translate(-46px, 46px) scale(1);
+            }
+
+            25% {
+                z-index: 1;
+                transform: translate(-46px, 46px) scale(1.2);
+            }
+
+            50% {
+                z-index: 0;
+                transform: translate(46px, 46px) scale(0);
+            }
+
+            75% {
+                transform: translate(-46px, 46px) scale(0);
+            }
+
+            100% {
+                z-index: 1;
+                transform: translate(-46px, 46px) scale(1);
+            }
+
+        }
+
+        @keyframes splash-block3 {
+
+            0% {
+                z-index: 0;
+                transform: translate(46px, 46px) scale(0);
+            }
+
+            25% {
+                z-index: 1;
+                transform: translate(46px, 46px) scale(1);
+            }
+
+            50% {
+                z-index: 1;
+                transform: translate(46px, 46px) scale(1.2);
+            }
+
+            75% {
+                z-index: 0;
+                transform: translate(46px, -46px) scale(0);
+            }
+
+            100% {
+                z-index: 0;
+                transform: translate(46px, 46px) scale(0);
+            }
+
+        }
+
+        @keyframes splash-block4 {
+
+            0% {
+                z-index: 0;
+                transform: translate(46px, -46px) scale(0);
+            }
+
+            25% {
+                z-index: 0;
+                transform: translate(46px, -46px) scale(0);
+            }
+
+            50% {
+                z-index: 1;
+                transform: translate(46px, -46px) scale(1);
+            }
+
+            75% {
+                z-index: 0;
+                transform: translate(46px, -46px) scale(1.2);
+            }
+
+            100% {
+                transform: translate(-46px, -46px) scale(0);
+                z-index: 0;
+            }
+
         }
 
     </style>
@@ -345,6 +484,12 @@
         </div>
 
         <!-- fixed elements -->
+        <div id="splashscreen">
+            <div style="animation: splash-block1 1.6s ease-in-out infinite;" id="splash-block1"></div>
+            <div style="animation: splash-block2 1.6s ease-in-out infinite;" id="splash-block2"></div>
+            <div style="animation: splash-block3 1.6s ease-in-out infinite;" id="splash-block3"></div>
+            <div style="animation: splash-block4 1.6s ease-in-out infinite;" id="splash-block4"></div>
+        </div>
         <button type="button" id="play-fab" title="new game" onclick="startNewGame();">
             <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"/></svg>
         </button>
@@ -675,6 +820,12 @@
             startNewGame();
         }
 
+        splashscreen = document.getElementById("splashscreen");
+        splashscreen.style.opacity = 0;
+        setTimeout(function() {
+            splashscreen.style.display = "none";
+        }, 170);
+
         function expandPart(expanderId) {
             expandContent = document.getElementById(`expand-${expanderId}-content`);
             if (typeof expanded[expanderId] == "undefined") {
@@ -784,7 +935,7 @@
             // console.log("setting play board styles");
             cssVariables.style.setProperty("--box-background", `${configuration.boxBackground}`);
             cssVariables.style.setProperty("--play-board-background", `${configuration.playAreaBackground}`);
-            cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), left ${120*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), transform ${120*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), background-color ${240*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1), color ${240*configuration.transitions}ms cubic-bezier(0.7, 0, 0.3, 1)`);
+            cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms ease-in-out, left ${120*configuration.transitions}ms ease-in-out, transform ${120*configuration.transitions}ms ease-in-out, background-color ${240*configuration.transitions}ms ease-in-out, color ${240*configuration.transitions}ms ease-in-out`);
             for ([index, color] of configuration.powerColors) {
                 cssVariables.style.setProperty(`power${index+1}-color`, `${color}`);
             }
