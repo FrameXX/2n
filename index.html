@@ -32,6 +32,7 @@
             --box-background: white;
             --box-size: 60px;
             --box-margin: 5px;
+            --box-scale: scale(0.98);
             --box-border-radius: 6px;
             --block-font-size: 24px;
             --block-transitions: top 120ms cubic-bezier(0.7, 0, 0.3, 1), left 120ms cubic-bezier(0.7, 0, 0.3, 1), transform 120ms cubic-bezier(0.7, 0, 0.3, 1), background-color 240ms cubic-bezier(0.7, 0, 0.3, 1), color 240ms cubic-bezier(0.7, 0, 0.3, 1);
@@ -137,6 +138,7 @@
         }
 
         .box {
+            transform: var(--box-scale);
             margin: var(--box-margin);
             width: var(--box-size);
             height: var(--box-size);
@@ -700,7 +702,7 @@
             cssVariables.style.setProperty("--box-margin", `${boxMargin}px`);
             cssVariables.style.setProperty("--box-size", `${(boardSize-(boxMargin*configuration.gridSize*2)-((boxMargin*2)/configuration.gridSize))/configuration.gridSize}px`);
             cssVariables.style.setProperty("--block-font-size", `${(boardSize/configuration.gridSize)/2.5}px`);
-            boxBorderRadius = ((boardSize/configuration.gridSize)/10)*configuration.boxBorderRadius;
+            boxBorderRadius = ((boardSize/configuration.gridSize)/20)*configuration.boxBorderRadius;
             cssVariables.style.setProperty("--box-border-radius", `${boxBorderRadius}px`);
             document.getElementById("play-board").style.borderRadius = `${Math.pow(configuration.gridSize, 1/2)*boxBorderRadius}px`;
         }
@@ -772,7 +774,7 @@
         }
 
         function resetStorage() {
-            configuration = {gridSize: 4, transitions: 1, boxBackground: "white", boxBorderRadius: 0.5, boxMargin: 1, playAreaBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
+            configuration = {gridSize: 4, transitions: 1, boxBackground: "white", boxBorderRadius: 1, boxMargin: 1, playAreaBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
             window[storage].setItem("configuration", JSON.stringify(configuration));
         }
 
@@ -1068,8 +1070,11 @@
 
         function updateBlock(block) {
             // console.log(`updating block ${block.element.id}`);
+            originalBoxScale = cssVariables.style.getPropertyValue("--box-scale");
+            cssVariables.style.setProperty("--box-scale", "scale(1)");
             block.element.style.top = document.getElementById(`box${block.x}-${block.y}`).getBoundingClientRect().top + scrollY + "px";
             block.element.style.left = document.getElementById(`box${block.x}-${block.y}`).getBoundingClientRect().left + scrollX + "px";
+            cssVariables.style.setProperty("--box-scale", originalBoxScale);
             block.element.innerHTML = Math.pow(2, block.power);
             if (block.power > 9) {
                 if (innerWidth > innerHeight) {
