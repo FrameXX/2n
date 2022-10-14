@@ -116,7 +116,6 @@
             background-color: var(--background-color);
         }
 
-
         [id^=row] {
             display: flex;
         }
@@ -133,6 +132,11 @@
             position: fixed;
             padding: 12px;
             box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.5);
+        }
+
+        .color-input-container:active {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2.5px;
         }
 
         .box {
@@ -269,6 +273,8 @@
         }
 
         #play-board {
+            user-select: none;;
+            cursor: pointer;
             margin: 6px;
             border: var(--box-margin) solid var(--play-board-background);
             background-color: var(--play-board-background);
@@ -470,8 +476,24 @@
 
         <!-- relative elements -->
         <div id="game-container">
-            <div id="game-score">Highest score: <span id="game-highest-score-value">0</span></div>
-            <div id="game-highest-score">Score: <span id="game-score-value">0</span></div>
+            <div class="range-option" style="justify-content: center; padding: 8px 0;">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 0 24 24" width="34px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm7.48 7.16l-5.01-.43-2-4.71c3.21.19 5.91 2.27 7.01 5.14zm-5.07 6.26L12 13.98l-2.39 1.44.63-2.72-2.11-1.83 2.78-.24L12 8.06l1.09 2.56 2.78.24-2.11 1.83.64 2.73zm-2.86-11.4l-2 4.72-5.02.43c1.1-2.88 3.8-4.97 7.02-5.15zM4 12c0-.64.08-1.26.23-1.86l3.79 3.28-1.11 4.75C5.13 16.7 4 14.48 4 12zm3.84 6.82L12 16.31l4.16 2.5c-1.22.75-2.64 1.19-4.17 1.19-1.52 0-2.94-.44-4.15-1.18zm9.25-.65l-1.11-4.75 3.79-3.28c.14.59.23 1.22.23 1.86 0 2.48-1.14 4.7-2.91 6.17z"/></svg>
+                </div>
+                <div class="value" style="width: auto; font-size: 20px;">
+                    <div class="title" style="padding-bottom: 5px;">Highest score</div>
+                    <div class="input" id="game-highest-score-value" style="font-weight: 600;">0</div>
+                </div>
+            </div>
+            <div class="range-option" style="justify-content: center; padding: 8px 0;">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 0 24 24" width="34px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+                </div>
+                <div class="value" style="width: auto; font-size: 20px;">
+                    <div class="title" style="padding-bottom: 5px;">Current score</div>
+                    <div class="input" id="game-score-value" style="font-weight: 600;">0</div>
+                </div>
+            </div>
             <div id="game-area">
                 <div id="play-board">
                     <div id="grid-container">
@@ -500,7 +522,7 @@
         <div id="dimmer" onclick="menu.open();"></div>
         <div id="menu">
             <div id="top-menu-fab-placeholder" style="height: 111px;"></div>
-            <h1>Configuration</h1>
+            <h1>2ⁿ</h1>
 
             <hr>
             <div id="expand-info" class="expand-container">
@@ -521,7 +543,7 @@
             <div id="expand-configuration" class="expand-container">
                 <div class="expand-head-container" onclick="expandPart('configuration');">
                     <svg id="expand-configuration-svg" class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
-                    <h2 class="expand-title">Configure</h2>
+                    <h2 class="expand-title">Configuration</h2>
                     <svg class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
                 </div>
                 <div id="expand-configuration-animator" class="expand-animator">
@@ -535,8 +557,8 @@
                             <div class="value">
                                 <div class="title">Grid size</div>
                                 <div class="input">
-                                    <input class="range" title="grid size" oninput="saveConfiguration(this.id);" id="grid-size-range" type="range" min="2" max="6">
-                                    <input class="number" oninput="saveConfiguration(this.id);" type="number" id="grid-size-value">
+                                    <input class="range" title="grid size" id="grid-size-range" type="range" min="2" max="6">
+                                    <input class="number" type="number" id="grid-size-value">
                                 </div>
                             </div>
                         </div>
@@ -548,8 +570,8 @@
                             <div class="value">
                                 <div class="title">Box margin multiplier</div>
                                 <div class="input">
-                                    <input class="range" title="box margin multiplier" oninput="saveConfiguration(this.id);" id="box-margin-range" type="range" min="0" max="20">
-                                    <input class="number" oninput="saveConfiguration(this.id);" type="number" id="box-margin-value">
+                                    <input class="range" title="box margin multiplier" id="box-margin-range" type="range" min="0" max="20">
+                                    <input class="number" type="number" id="box-margin-value">
                                 </div>
                             </div>
                         </div>
@@ -561,8 +583,8 @@
                             <div class="value">
                                 <div class="title">Box border radius multiplier</div>
                                 <div class="input">
-                                    <input class="range" title="Box border radius multiplier" oninput="saveConfiguration(this.id);" id="box-border-radius-range" type="range" min="0" max="20">
-                                    <input class="number" oninput="saveConfiguration(this.id);" type="number" id="box-border-radius-value">
+                                    <input class="range" title="Box border radius multiplier" id="box-border-radius-range" type="range" min="0" max="20">
+                                    <input class="number" type="number" id="box-border-radius-value">
                                 </div>
                             </div>
                         </div>
@@ -574,8 +596,8 @@
                             <div class="value">
                                 <div class="title">Transitions (animations) multiplier</div>
                                 <div class="input">
-                                    <input class="range" title="Transitions (animations) multiplier" oninput="saveConfiguration(this.id);" id="transitions-range" type="range" min="0" max="20">
-                                    <input class="number" oninput="saveConfiguration(this.id);" type="number" id="transitions-value">
+                                    <input class="range" title="Transitions (animations) multiplier" id="transitions-range" type="range" min="0" max="20">
+                                    <input class="number" type="number" id="transitions-value">
                                 </div>
                             </div>
                         </div>
@@ -629,6 +651,7 @@
                     dimmer.style.display = "none";
                 }, 310);
                 this.opened = false;
+                mode = "play";
             } else {
                 dimmer.style.display = "block";
                 setTimeout(function() {
@@ -650,6 +673,7 @@
                 setTimeout(function() {
                 }, 300);
                 this.opened = true;
+                mode = "menu";
             }
         }, updateStyle() {
             menuFab = document.getElementById("menu-fab");
@@ -718,6 +742,7 @@
         configuration = {};
         unApplyedConfiguration = {};
         blocks = [];
+        mode = "play";
 
         if (window[storage].getItem("storageUsed") == null) {
             resetStorage();
@@ -728,32 +753,46 @@
 
         Object.assign(unApplyedConfiguration, configuration);
 
-        addEventListener("keydown", function(e) {
-            if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-                e.preventDefault();
+        optionRangeValuePairs = [{optionDOM: "grid-size", optionJS: "gridSize", multiplier: 1}, {optionDOM: "box-margin", optionJS: "boxMargin", multiplier: 0.1}, {optionDOM: "box-border-radius", optionJS: "boxBorderRadius", multiplier: 0.1}, {optionDOM: "transitions", optionJS: "transitions", multiplier: 0.1}]
+
+        for (pair of optionRangeValuePairs) {
+            document.getElementById(`${pair.optionDOM}-range`).addEventListener("input", updateOptionRangeValuePair.bind(null, pair, "range"));
+            document.getElementById(`${pair.optionDOM}-value`).addEventListener("input", updateOptionRangeValuePair.bind(null, pair, "value"));
+        }
+
+        addEventListener("keydown", function(key) {
+            if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(key.code) > -1) {
+                key.preventDefault();
             }
         }, false);
 
         addEventListener("keyup", function() {
-            switch (event.key) {
-                case "ArrowRight":
-                case "d":
-                    moveBlocks("right");
-                    break;
-                case "ArrowUp":
-                case "w":
-                    moveBlocks("up");
-                    break;
-                case "ArrowLeft":
-                case "a":
-                    moveBlocks("left");
-                    break;
-                case "ArrowDown":
-                case "s":
-                    moveBlocks("down");
-                    break;
-                default:
-                    break;
+            if (mode == "play") {
+                switch (event.key) {
+                    case "ArrowRight":
+                    case "d":
+                        moveBlocks("right");
+                        break;
+                    case "ArrowUp":
+                    case "w":
+                        moveBlocks("up");
+                        break;
+                    case "ArrowLeft":
+                    case "a":
+                        moveBlocks("left");
+                        break;
+                    case "ArrowDown":
+                    case "s":
+                        moveBlocks("down");
+                        break;
+                    case " ":
+                        if (confirm("Confirm start of new game?")) {
+                            startNewGame();
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
@@ -812,8 +851,11 @@
         //     }
         // }, 150);
 
-        updateConfigurationValuesInHTML("value");
-        updateConfigurationValuesInHTML("range");
+        for (pair of optionRangeValuePairs) {
+            document.getElementById(`${pair.optionDOM}-value`).value = configuration[pair.optionJS];
+            updateOptionRangeValuePair(pair, "value");
+        }
+
         menu.updateStyle();
         if (window[storage].getItem("storageUsed") == null) {
             window[storage].setItem("storageUsed", 1);
@@ -821,6 +863,7 @@
         }
 
         setTimeout(function() {
+            updateBoard();
             splashscreen = document.getElementById("splashscreen");
             splashscreen.style.opacity = 0;
             setTimeout(function() {
@@ -835,12 +878,12 @@
             }
             if (!expanded[expanderId]) {
                 expanded[expanderId] = true;
-                document.getElementById(`expand-${expanderId}-svg`).style.transform = "rotate(0.5turn)";
+                document.getElementById(`expand-${expanderId}-svg`).style.transform = "scaleY(-100%)";
                 document.getElementById(`expand-${expanderId}-animator`).style.height = (getComputedStyle(expandContent).height.replace("px", "")*1)+5 + "px";
             } else {
                 expanded[expanderId] = false;
-                document.getElementById(`expand-${expanderId}-svg`).style.transform = "";
-                document.getElementById(`expand-${expanderId}-animator`).style.height = "";
+                document.getElementById(`expand-${expanderId}-svg`).style.removeProperty("transform");
+                document.getElementById(`expand-${expanderId}-animator`).style.removeProperty("height");
             }
         }
 
@@ -860,32 +903,19 @@
             document.getElementById("play-board").style.borderRadius = `${Math.pow(configuration.gridSize, 1/2)*boxBorderRadius}px`;
         }
 
-        function saveConfiguration(fromElement) {
-            fromElement = fromElement.substring(fromElement.length-5, fromElement.length);
-            if (fromElement != "range") {
-                divider = 1;
+        function updateOptionRangeValuePair(pair, origin) {
+            if (origin == "range") {
+                valueMultiplier = pair.multiplier;
+                DOMMultiplier = 1;
+                applyedTo = "value";
             } else {
-                divider = 10;
+                valueMultiplier = 1;
+                DOMMultiplier = 1/pair.multiplier;
+                applyedTo = "range";
             }
-            unApplyedConfiguration.gridSize = document.getElementById(`grid-size-${fromElement}`).value;
-            unApplyedConfiguration.boxMargin = document.getElementById(`box-margin-${fromElement}`).value/divider;
-            unApplyedConfiguration.boxBorderRadius = document.getElementById(`box-border-radius-${fromElement}`).value/divider;
-            unApplyedConfiguration.transitions = document.getElementById(`transitions-${fromElement}`).value/divider;
-            updateConfigurationValuesInHTML(fromElement);
-        }
-
-        function updateConfigurationValuesInHTML(fromElement) {
-            if (fromElement != "range") {
-                fromElement = "range"
-                multiplier = 10;
-            } else {
-                multiplier = 1;
-                fromElement = "value";
-            }
-            document.getElementById(`grid-size-${fromElement}`).value = unApplyedConfiguration.gridSize;
-            document.getElementById(`box-margin-${fromElement}`).value = unApplyedConfiguration.boxMargin*multiplier;
-            document.getElementById(`box-border-radius-${fromElement}`).value = unApplyedConfiguration.boxBorderRadius*multiplier;
-            document.getElementById(`transitions-${fromElement}`).value = unApplyedConfiguration.transitions*multiplier;
+            value = document.getElementById(`${pair.optionDOM}-${origin}`).value*valueMultiplier;
+            unApplyedConfiguration[pair.optionJS] = value;
+            document.getElementById(`${pair.optionDOM}-${applyedTo}`).value = Math.round(value*DOMMultiplier*10)/10;
         }
 
         function startNewGame() {
@@ -893,8 +923,7 @@
             window[storage].setItem("configuration", JSON.stringify(configuration));
             statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScore: statistics.highestScore, moves: 0, blocksPowered: 0};
             blocks = [];
-            document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
-            document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
+            updateUserStatistics();
             document.getElementById("blocks-container").innerHTML = "";
             document.getElementById("grid-container").innerHTML = "";
             configureGameSetup();
@@ -906,6 +935,10 @@
             window[storage].setItem("statistics", JSON.stringify(statistics));
         }
 
+        function extractRGBValues(RGBColor) {
+            return RGBColor.match(/rgb\((\d*?), (\d*?), (\d*?)\)/);
+        }
+
         function restoreStorage() {
             Object.assign(configuration, JSON.parse(window[storage].getItem("configuration")));
             Object.assign(blocks, JSON.parse(window[storage].getItem("blocks")));
@@ -913,8 +946,7 @@
         }
 
         function restoreGame() {
-            document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
-            document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
+            updateUserStatistics();
             document.getElementById("blocks-container").innerHTML = "";
             document.getElementById("grid-container").innerHTML = "";
             configureGameSetup();
@@ -1079,13 +1111,13 @@
                 // }
                 // console.log(powerUpPairLog);
                 setTimeout(function() {
-                    document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
-                    document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
+                    updateUserStatistics();
                     updateBlock(move.powerUpBlockPairs[1]);
                     move.powerUpBlockPairs[1].element.style.transform = "scale(1)";
                     removeBlock(move.powerUpBlockPairs[0]);
                     move.powerUpBlockPairs.splice(0, 2);
                     statistics.blocksToRemove.splice(0, 1);
+                    window[storage].setItem("blocks", JSON.stringify(blocks));
                     // powerUpPairLog = "removed powerUpBlockPair:";
                     // for (pair = 0; pair < move.powerUpBlockPairs.length; pair += 2) {
                     //     powerUpPairLog += ` ${move.powerUpBlockPairs[pair].x}, ${move.powerUpBlockPairs[pair].y}, ${move.powerUpBlockPairs[pair].element.id}; ${move.powerUpBlockPairs[pair].x}, ${move.powerUpBlockPairs[pair].y}, ${move.powerUpBlockPairs[pair].element.id}|`;
@@ -1110,6 +1142,11 @@
                     break;
             }
             updateBlock(blocks[localBlock]);
+        }
+
+        function updateUserStatistics() {
+            document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
+            document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
         }
 
         function removeBlock(blockObject) {
@@ -1149,7 +1186,7 @@
         }
 
         function getReadableTextColor(backgroundRGB) {
-            backgroundRGB = backgroundRGB.match(/rgb\((\d*?), (\d*?), (\d*?)\)/);
+            backgroundRGB = extractRGBValues(backgroundRGB);
             R = backgroundRGB[1]*1;
             G = backgroundRGB[2]*1;
             B = backgroundRGB[3]*1;
@@ -1200,7 +1237,7 @@
 
         function restoreBlock(block) {
             blockElement = document.createElement("div");
-            blockElement.id = `block${block.elementId}`;
+            blockElement.id = block.elementId;
             blockElement.setAttribute("class", "block");
             blockElement.style.backgroundColor = `var(--power${block.power}-color)`;
             blockElement.style.color = getReadableTextColor(configuration.powerColors[block.power-1]);
