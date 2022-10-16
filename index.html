@@ -553,7 +553,7 @@
                     <svg class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
                 </div>
                 <div id="expand-configuration-animator" class="expand-animator">
-                    <div id="expand-configuration-content">
+                    <div id="expand-configuration-content" style="display: none;">
                         <hr>
 
                         <div class="range-option">
@@ -620,7 +620,7 @@
                     <svg class="expand-svg" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><g><rect fill="none" height="24" width="24"/></g><g><g><g><g><path d="M12,22C6.49,22,2,17.51,2,12S6.49,2,12,2s10,4.04,10,9c0,3.31-2.69,6-6,6h-1.77c-0.28,0-0.5,0.22-0.5,0.5 c0,0.12,0.05,0.23,0.13,0.33c0.41,0.47,0.64,1.06,0.64,1.67C14.5,20.88,13.38,22,12,22z M12,4c-4.41,0-8,3.59-8,8s3.59,8,8,8 c0.28,0,0.5-0.22,0.5-0.5c0-0.16-0.08-0.28-0.14-0.35c-0.41-0.46-0.63-1.05-0.63-1.65c0-1.38,1.12-2.5,2.5-2.5H16 c2.21,0,4-1.79,4-4C20,7.14,16.41,4,12,4z"/><circle cx="6.5" cy="11.5" r="1.5"/><circle cx="9.5" cy="7.5" r="1.5"/><circle cx="14.5" cy="7.5" r="1.5"/><circle cx="17.5" cy="11.5" r="1.5"/></g></g></g></g></svg>
                 </div>
                 <div id="expand-colors-animator" class="expand-animator">
-                    <div class="expand-content" style="text-align: left;" id="expand-colors-content">
+                    <div class="expand-content" style="text-align: left; display: none;" id="expand-colors-content">
                         <hr>
 
                         <div class="range-option">
@@ -1013,6 +1013,11 @@
                 dimmer.style.opacity = 0;
                 setTimeout(function() {
                     dimmer.style.display = "none";
+                    for (expandable in expanded) {
+                        if (expanded[expandable]) {
+                            expandPart(expandable);
+                        }
+                    }
                 }, 310);
                 this.opened = false;
                 mode = "play";
@@ -1318,12 +1323,16 @@
             }
             if (!expanded[expanderId]) {
                 expanded[expanderId] = true;
+                expandContent.style.display = "block";
                 document.getElementById(`expand-${expanderId}-svg`).style.transform = "scaleY(-100%)";
                 document.getElementById(`expand-${expanderId}-animator`).style.height = (getComputedStyle(expandContent).height.replace("px", "")*1)+5 + "px";
             } else {
                 expanded[expanderId] = false;
                 document.getElementById(`expand-${expanderId}-svg`).style.removeProperty("transform");
                 document.getElementById(`expand-${expanderId}-animator`).style.removeProperty("height");
+                setTimeout(function() {
+                    expandContent.style.display = "none";
+                }, 210);
             }
         }
 
@@ -1445,9 +1454,9 @@
         }
 
         function configureGameSetup() {
-            // console.log(`configuring game setup: ${JSON.stringify(configuration)}`);
+            console.log(`configuring game setup: ${JSON.stringify(configuration)}`);
 
-            // console.log("setting play board styles");
+            console.log("setting play board styles");
             cssVariables.style.setProperty("--box-background", `${configuration.boxBackground}`);
             cssVariables.style.setProperty("--play-board-background", `${configuration.playBoardBackground}`);
             cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms ease-in-out, left ${120*configuration.transitions}ms ease-in-out, transform ${120*configuration.transitions}ms ease-in-out, background-color ${240*configuration.transitions}ms ease-in-out, color ${240*configuration.transitions}ms ease-in-out`);
@@ -1455,34 +1464,34 @@
                 cssVariables.style.setProperty(`--power${loop}-color`, configuration.powerColors[loop-1]);
             }
 
-            // console.log("writing play board grid");
+            console.log("writing play board grid");
             gridContainer = document.getElementById("grid-container");
             for (row = 0; row < configuration.gridSize; row++) {
                 rowElement = document.createElement("div");
                 rowElement.id = `row${row}`;
                 gridContainer.appendChild(rowElement);
-                // console.log(`created row ${row}`);
+                console.log(`created row ${row}`);
                 for (box = 0; box < configuration.gridSize; box++) {
                     boxElement = document.createElement("div");
                     boxElement.id = `box${row}-${box}`;
                     boxElement.setAttribute("class", "box");
                     rowElement.appendChild(boxElement);
-                    // console.log(`created box ${box} in row ${row}`);
+                    console.log(`created box ${box} in row ${row}`);
                 }
             }
         }
 
         function checkMoveOptions(x, y, direction) {
-            // console.log(`reading ${x},${y}`);
+            console.log(`reading ${x},${y}`);
             canMove = false;
             powerUp = false;
             localBlock = getBlockFromPosition(x, y);
             if (localBlock !== false) {
-                // console.log(`found local block ${blocks[localBlock].element.id}`);
+                console.log(`found local block ${blocks[localBlock].element.id}`);
                 moveSteps = 1;
                 obstructingBlock = false;
                 while (obstructingBlock === false && ((direction == "right" && moveSteps+y < configuration.gridSize) || (direction == "up" && x-moveSteps >= 0) || (direction == "left" && y-moveSteps >= 0) || (direction == "down" && moveSteps+x < configuration.gridSize))) {
-                    // console.log(`checking move to ${direction} by ${moveSteps}`);
+                    console.log(`checking move to ${direction} by ${moveSteps}`);
                     switch (direction) {
                         case "right":
                             obstructingBlock = getBlockFromPosition(x, y+moveSteps);
@@ -1502,14 +1511,14 @@
                     moveSteps++;
                 }
                 if (obstructingBlock !== false) {
-                    // console.log(`found obstructing block ${blocks[obstructingBlock].element.id} in ${direction}`);
+                    console.log(`found obstructing block ${blocks[obstructingBlock].element.id} in ${direction}`);
                     if (blocks[obstructingBlock].power == blocks[localBlock].power) {
-                        // console.log(`obstructing block has same power of ${blocks[localBlock].power}`);
+                        console.log(`obstructing block has same power of ${blocks[localBlock].power}`);
                         canMove = true;
                         powerUp = true;
                         blocks[localBlock].element.style.zIndex = 0;
                     } else if (moveSteps > 2) {
-                        // console.log(`moving as far as possible before obstructing block`);
+                        console.log(`moving as far as possible before obstructing block`);
                         canMove = true;
                         moveSteps--;
                     }
@@ -1523,7 +1532,7 @@
         }
 
         function moveBlocks(direction) {
-            // console.log(`moving blocks ${direction}`);
+            console.log(`moving blocks ${direction}`);
             move.nothingMoved = true;
             switch (direction) {
                 case "right":
@@ -1557,12 +1566,12 @@
                 default:
                     break;
             }
-            // console.log("moving blocks finalized");
+            console.log("moving blocks finalized");
             blocksLog = "";
             for (block of blocks) {
                 blocksLog += ` ${block.x}, ${block.y}, ${block.element.id};`;
             }
-            // console.log(blocksLog);
+            console.log(blocksLog);
             if (!move.nothingMoved) {
                 updateBlock(createBlock(1));
                 statistics.moves++;
@@ -1573,7 +1582,7 @@
 
         function moveSingleBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps) {
             move.nothingMoved = false;
-            // console.log(`moving block ${blocks[localBlock].element.id} ${direction} by ${moveSteps-1} steps`);
+            console.log(`moving block ${blocks[localBlock].element.id} ${direction} by ${moveSteps-1} steps`);
             if (powerUp) {
                 blocks[obstructingBlock].power++;
                 statistics.blocksPowered++;
@@ -1632,7 +1641,7 @@
         }
 
         function removeBlock(blockObject) {
-            // console.log(`removing block ${blockObject.element.id}`);
+            console.log(`removing block ${blockObject.element.id}`);
             blockObject.element.remove();
             blockindex = 0;
             for ([index, block] of blocks.entries()) {
@@ -1644,11 +1653,11 @@
         }
 
         function getBlockFromPosition(x, y) {
-            // console.log(`getting block from position ${x}, ${y}`);
+            console.log(`getting block from position ${x}, ${y}`);
             blockIndex = false;
             for ([index, block] of blocks.entries()) {
                 if (block.x == x && block.y == y) {
-                    // console.log(`${block.element.id} has same position of ${x}, ${y}, checking if it isn't about to be removed`);
+                    console.log(`${block.element.id} has same position of ${x}, ${y}, checking if it isn't about to be removed`);
                     blockRemoved = false;
                     for (blockToRemove of statistics.blocksToRemove) {
                         if (blockToRemove == block) {
@@ -1657,9 +1666,9 @@
                     }
                     if (!blockRemoved) {
                         if (blockIndex != false) {
-                            // console.error(`both blocks ${block.element.id} and ${blocks[blockIndex].element.id} were found on position ${x}, ${y}`);
+                            console.error(`both blocks ${block.element.id} and ${blocks[blockIndex].element.id} were found on position ${x}, ${y}`);
                         }
-                        // console.log(`${block.element.id} was not removed hence setting as a result`);
+                        console.log(`${block.element.id} was not removed hence setting as a result`);
                         blockIndex = index;
                     }
                 }
@@ -1713,7 +1722,7 @@
             blocks[blocks.length] = {x: startX, y: startY, power: power, element: blockElement, elementId: `block${statistics.blocksCreated}`};
             blocks[blocks.length-1].element.style.color = getReadableTextColor(configuration.powerColors[blocks[blocks.length-1].power-1]);
             statistics.blocksCreated++;
-            // console.log(`created play block ${blocks[blocks.length-1].element.id} on position ${startX}, ${startY} with power of ${power}`);
+            console.log(`created play block ${blocks[blocks.length-1].element.id} on position ${startX}, ${startY} with power of ${power}`);
             return blocks[blocks.length-1];
         }
 
@@ -1747,14 +1756,14 @@
         }
 
         function updateBoard(transitions) {
-            // console.log("updating play board");
+            console.log("updating play board");
             for (block of blocks) {
                 updateBlock(block);
             }
         }
 
         function updateBlock(block) {
-            // console.log(`updating block ${block.element.id}`);
+            console.log(`updating block ${block.element.id}`);
             originalBoxScale = cssVariables.style.getPropertyValue("--box-scale");
             cssVariables.style.setProperty("--box-scale", "scale(1)");
             block.element.style.top = document.getElementById(`box${block.x}-${block.y}`).getBoundingClientRect().top + scrollY + "px";
