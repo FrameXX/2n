@@ -24,7 +24,6 @@
     <style>
 
         :root {
-
             --accent-color: rgb(40, 40, 40);
             --background-color: white;
             --text-color: black;
@@ -52,7 +51,6 @@
             --power13-color: rgb(180, 167, 214);
             --power14-color: rgb(142, 124, 195);
             --power15-color: rgb(103, 78, 167);
-
         }
 
         body {
@@ -65,6 +63,7 @@
 
         input {
             font-family: inherit;
+            color: inherit;
         }
 
         button {
@@ -222,6 +221,13 @@
             justify-content: center;
             padding: 10px;
             flex-shrink: 0;
+        }
+
+        .range-option .icon .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            background-color: black;
         }
 
         .range-option .value {
@@ -507,10 +513,10 @@
 
         <!-- fixed elements -->
         <div id="splashscreen">
-            <div style="animation: splash-block1 1.6s ease-in-out infinite;" id="splash-block1"></div>
-            <div style="animation: splash-block2 1.6s ease-in-out infinite;" id="splash-block2"></div>
-            <div style="animation: splash-block3 1.6s ease-in-out infinite;" id="splash-block3"></div>
-            <div style="animation: splash-block4 1.6s ease-in-out infinite;" id="splash-block4"></div>
+            <div style="animation: splash-block1 1.3s ease-in-out infinite;" id="splash-block1"></div>
+            <div style="animation: splash-block2 1.3s ease-in-out infinite;" id="splash-block2"></div>
+            <div style="animation: splash-block3 1.3s ease-in-out infinite;" id="splash-block3"></div>
+            <div style="animation: splash-block4 1.3s ease-in-out infinite;" id="splash-block4"></div>
         </div>
         <button type="button" id="play-fab" title="new game" onclick="startNewGame();">
             <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"/></svg>
@@ -616,6 +622,343 @@
                 <div id="expand-colors-animator" class="expand-animator">
                     <div class="expand-content" style="text-align: left;" id="expand-colors-content">
                         <hr>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="play-board-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">Play board RGB</div>
+                                <div class="input">
+                                    <input class="range" title="Play board red color" id="play-board-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="play-board-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="Play board green color" id="play-board-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="play-board-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="Play board blue color" id="play-board-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="play-board-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power1-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2¹ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 1 block red color" id="2power1-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power1-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 1 block green color" id="2power1-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power1-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 1 block blue color" id="2power1-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power1-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power2-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2² block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 2 block red color" id="2power2-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power2-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 2 block green color" id="2power2-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power2-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 2 block blue color" id="2power2-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power2-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power3-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2³ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 3 block red color" id="2power3-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power3-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 3 block green color" id="2power3-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power3-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 3 block blue color" id="2power3-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power3-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power4-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2⁴ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 4 block red color" id="2power4-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power4-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 4 block green color" id="2power4-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power4-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 4 block blue color" id="2power4-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power4-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power5-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2⁵ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 5 block red color" id="2power5-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power5-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 5 block green color" id="2power5-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power5-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 5 block blue color" id="2power5-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power5-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power6-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2⁶ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 6 block red color" id="2power6-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power6-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 6 block green color" id="2power6-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power6-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 6 block blue color" id="2power6-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power6-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power7-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2⁷ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 7 block red color" id="2power7-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power7-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 7 block green color" id="2power7-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power7-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 7 block blue color" id="2power7-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power7-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power8-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2⁸ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 8 block red color" id="2power8-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power8-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 8 block green color" id="2power8-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power8-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 8 block blue color" id="2power8-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power8-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power9-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2⁹ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 9 block red color" id="2power9-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power9-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 9 block green color" id="2power9-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power9-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 9 block blue color" id="2power9-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power9-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power10-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2¹⁰ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 10 block red color" id="2power10-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power10-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 10 block green color" id="2power10-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power10-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 10 block blue color" id="2power10-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power10-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power11-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2¹¹ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 11 block red color" id="2power11-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power11-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 11 block green color" id="2power11-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power11-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 11 block blue color" id="2power11-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power11-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power12-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2¹² block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 12 block red color" id="2power12-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power12-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 12 block green color" id="2power12-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power12-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 12 block blue color" id="2power12-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power12-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power13-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2¹³ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 13 block red color" id="2power13-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power13-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 13 block green color" id="2power13-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power13-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 13 block blue color" id="2power13-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power13-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power14-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2¹⁴ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 14 block red color" id="2power14-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power14-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 14 block green color" id="2power14-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power14-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 14 block blue color" id="2power14-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power14-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
+                                <div class="color-preview" id="2power15-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">2¹⁵ block RGB</div>
+                                <div class="input">
+                                    <input class="range" title="2 power 15 block red color" id="2power15-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power15-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="2 power 15 block green color" id="2power15-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power15-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="2 power 15 block blue color" id="2power15-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="2power15-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -738,11 +1081,37 @@
         }, values: {}}
 
         move = {powerUpBlockPairs: [], nothingMoved: true};
-        statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScore: 0, moves: 0, blocksPowered: 0};
+        statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScores: {grid4: 0}, moves: 0, blocksPowered: 0};
         configuration = {};
         unApplyedConfiguration = {};
         blocks = [];
         mode = "play";
+        optionPowerColorValuePairsNumber = 15;
+
+        chooseTheme();
+        matchMedia('(prefers-color-scheme: dark)').addEventListener("change", chooseTheme);
+
+        function chooseTheme() {
+            if (matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme(true);
+            } else {
+                setTheme(false);
+            }
+        }
+
+        function setTheme(dark) {
+            if (dark) {
+                cssVariables.style.setProperty('--accent-color', "rgb(240, 240, 240)");
+                cssVariables.style.setProperty('--background-color', "rgb(50, 50, 50)");
+                cssVariables.style.setProperty('--text-color', "white");
+                cssVariables.style.setProperty('--pale-color', "rgb(70, 70, 70)");
+            } else {
+                cssVariables.style.setProperty('--accent-color', "rgb(40, 40, 40)");
+                cssVariables.style.setProperty('--background-color', "white");
+                cssVariables.style.setProperty('--text-color', "black");
+                cssVariables.style.setProperty('--pale-color', "rgb(230, 230, 230)");
+            }
+        }
 
         if (window[storage].getItem("storageUsed") == null) {
             resetStorage();
@@ -758,6 +1127,39 @@
         for (pair of optionRangeValuePairs) {
             document.getElementById(`${pair.optionDOM}-range`).addEventListener("input", updateOptionRangeValuePair.bind(null, pair, "range"));
             document.getElementById(`${pair.optionDOM}-value`).addEventListener("input", updateOptionRangeValuePair.bind(null, pair, "value"));
+        }
+
+        for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
+            document.getElementById(`2power${loop}-R-range`).addEventListener("input", updateOptionPowerColorValuePair.bind(null, "range", loop));
+            document.getElementById(`2power${loop}-G-range`).addEventListener("input", updateOptionPowerColorValuePair.bind(null, "range", loop));
+            document.getElementById(`2power${loop}-B-range`).addEventListener("input", updateOptionPowerColorValuePair.bind(null, "range", loop));
+            document.getElementById(`2power${loop}-R-value`).addEventListener("input", updateOptionPowerColorValuePair.bind(null, "value", loop));
+            document.getElementById(`2power${loop}-G-value`).addEventListener("input", updateOptionPowerColorValuePair.bind(null, "value", loop));
+            document.getElementById(`2power${loop}-B-value`).addEventListener("input", updateOptionPowerColorValuePair.bind(null, "value", loop));
+        }
+
+        document.getElementById("play-board-R-range").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "range"));
+        document.getElementById("play-board-G-range").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "range"));
+        document.getElementById("play-board-B-range").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "range"));
+        document.getElementById("play-board-R-value").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "value"));
+        document.getElementById("play-board-G-value").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "value"));
+        document.getElementById("play-board-B-value").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "value"));
+
+        function updateOptionPlayBoardBackground(origin) {
+            if (origin == "range") {
+                applyedTo = "value";
+            } else {
+                applyedTo = "range";
+            }
+            R = document.getElementById(`play-board-R-${origin}`).value;
+            G = document.getElementById(`play-board-G-${origin}`).value;
+            B = document.getElementById(`play-board-B-${origin}`).value;
+            value = `rgb(${R}, ${G}, ${B})`;
+            unApplyedConfiguration.playBoardBackground = value;
+            document.getElementById("play-board-color-preview").style.backgroundColor = value;
+            document.getElementById(`play-board-R-${applyedTo}`).value = R;
+            document.getElementById(`play-board-G-${applyedTo}`).value = G;
+            document.getElementById(`play-board-B-${applyedTo}`).value = B;
         }
 
         addEventListener("keydown", function(key) {
@@ -849,12 +1251,40 @@
         //         default:
         //             break;
         //     }
-        // }, 150);
+        // }, 20);
 
         for (pair of optionRangeValuePairs) {
             document.getElementById(`${pair.optionDOM}-value`).value = configuration[pair.optionJS];
             updateOptionRangeValuePair(pair, "value");
         }
+
+        for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
+            value = configuration.powerColors[loop-1];
+            RGB = getRGBvalues(value);
+            R = RGB[1];
+            G = RGB[2];
+            B = RGB[3];
+            document.getElementById(`2power${loop}-color-preview`).style.backgroundColor = value;
+            document.getElementById(`2power${loop}-R-range`).value = R;
+            document.getElementById(`2power${loop}-G-range`).value = G;
+            document.getElementById(`2power${loop}-B-range`).value = B;
+            document.getElementById(`2power${loop}-R-value`).value = R;
+            document.getElementById(`2power${loop}-G-value`).value = G;
+            document.getElementById(`2power${loop}-B-value`).value = B;
+        }
+
+        value = configuration.playBoardBackground;
+        RGB = getRGBvalues(value);
+        R = RGB[1];
+        G = RGB[2];
+        B = RGB[3];
+        document.getElementById("play-board-color-preview").style.backgroundColor = value;
+        document.getElementById(`play-board-R-range`).value = R;
+        document.getElementById(`play-board-G-range`).value = G;
+        document.getElementById(`play-board-B-range`).value = B;
+        document.getElementById(`play-board-R-value`).value = R;
+        document.getElementById(`play-board-G-value`).value = G;
+        document.getElementById(`play-board-B-value`).value = B;
 
         menu.updateStyle();
         if (window[storage].getItem("storageUsed") == null) {
@@ -903,6 +1333,24 @@
             document.getElementById("play-board").style.borderRadius = `${Math.pow(configuration.gridSize, 1/2)*boxBorderRadius}px`;
         }
 
+        function updateOptionPowerColorValuePair(origin, power) {
+            if (origin == "range") {
+                applyedTo = "value";
+            } else {
+                applyedTo = "range";
+            }
+            R = document.getElementById(`2power${power}-R-${origin}`).value;
+            G = document.getElementById(`2power${power}-G-${origin}`).value;
+            B = document.getElementById(`2power${power}-B-${origin}`).value;
+            value = `rgb(${R}, ${G}, ${B})`;
+            unApplyedConfiguration.powerColors[power-1] = value;
+            document.getElementById(`2power${power}-color-preview`).style.backgroundColor = value;
+            document.getElementById(`2power${power}-R-${applyedTo}`).value = R;
+            document.getElementById(`2power${power}-G-${applyedTo}`).value = G;
+            document.getElementById(`2power${power}-B-${applyedTo}`).value = B;
+            // cssVariables.style.setProperty(`--power${power}-color`, value);
+        }
+
         function updateOptionRangeValuePair(pair, origin) {
             if (origin == "range") {
                 valueMultiplier = pair.multiplier;
@@ -921,8 +1369,11 @@
         function startNewGame() {
             Object.assign(configuration, unApplyedConfiguration);
             window[storage].setItem("configuration", JSON.stringify(configuration));
-            statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScore: statistics.highestScore, moves: 0, blocksPowered: 0};
+            statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScores: statistics.highestScores, moves: 0, blocksPowered: 0};
             blocks = [];
+            if (typeof statistics.highestScores[`grid${configuration.gridSize}`] == "undefined") {
+                statistics.highestScores[`grid${configuration.gridSize}`] = 0;
+            }
             updateUserStatistics();
             document.getElementById("blocks-container").innerHTML = "";
             document.getElementById("grid-container").innerHTML = "";
@@ -935,7 +1386,7 @@
             window[storage].setItem("statistics", JSON.stringify(statistics));
         }
 
-        function extractRGBValues(RGBColor) {
+        function getRGBvalues(RGBColor) {
             return RGBColor.match(/rgb\((\d*?), (\d*?), (\d*?)\)/);
         }
 
@@ -946,6 +1397,9 @@
         }
 
         function restoreGame() {
+            if (typeof statistics.highestScores[`grid${configuration.gridSize}`] == "undefined") {
+                statistics.highestScores[`grid${configuration.gridSize}`] = 0;
+            }
             updateUserStatistics();
             document.getElementById("blocks-container").innerHTML = "";
             document.getElementById("grid-container").innerHTML = "";
@@ -959,7 +1413,7 @@
         }
 
         function resetStorage() {
-            configuration = {gridSize: 4, transitions: 1, boxBackground: "white", boxBorderRadius: 1, boxMargin: 1, playAreaBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
+            configuration = {gridSize: 4, transitions: 1, boxBackground: "white", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
             window[storage].setItem("configuration", JSON.stringify(configuration));
         }
 
@@ -968,10 +1422,10 @@
 
             // console.log("setting play board styles");
             cssVariables.style.setProperty("--box-background", `${configuration.boxBackground}`);
-            cssVariables.style.setProperty("--play-board-background", `${configuration.playAreaBackground}`);
+            cssVariables.style.setProperty("--play-board-background", `${configuration.playBoardBackground}`);
             cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms ease-in-out, left ${120*configuration.transitions}ms ease-in-out, transform ${120*configuration.transitions}ms ease-in-out, background-color ${240*configuration.transitions}ms ease-in-out, color ${240*configuration.transitions}ms ease-in-out`);
-            for ([index, color] of configuration.powerColors) {
-                cssVariables.style.setProperty(`power${index+1}-color`, `${color}`);
+            for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
+                cssVariables.style.setProperty(`--power${loop}-color`, configuration.powerColors[loop-1]);
             }
 
             // console.log("writing play board grid");
@@ -1036,7 +1490,7 @@
                     canMove = true;
                 }
                 if (canMove) {
-                    moveBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps);
+                    moveSingleBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps);
                 }
             }  
         }
@@ -1090,17 +1544,18 @@
             window[storage].setItem("statistics", JSON.stringify(statistics));
         }
 
-        function moveBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps) {
+        function moveSingleBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps) {
             move.nothingMoved = false;
             // console.log(`moving block ${blocks[localBlock].element.id} ${direction} by ${moveSteps-1} steps`);
             if (powerUp) {
                 blocks[obstructingBlock].power++;
                 statistics.blocksPowered++;
-                statistics.score += Math.pow(2, blocks[obstructingBlock].power)*Math.pow(10, 4-configuration.gridSize);
-                if (statistics.score > statistics.highestScore) {
-                    statistics.highestScore = statistics.score;
+                statistics.score += Math.pow(2, blocks[obstructingBlock].power);
+                if (statistics.score > statistics.highestScores[`grid${configuration.gridSize}`]) {
+                    statistics.highestScores[`grid${configuration.gridSize}`] = statistics.score;
                 }
                 blocks[obstructingBlock].element.style.transform = "scale(1.2)";
+                blocks[localBlock].element.style.transform = "scale(0)";
                 blocks[obstructingBlock].element.style.backgroundColor = `var(--power${blocks[obstructingBlock].power}-color)`;
                 blocks[obstructingBlock].element.style.color = getReadableTextColor(configuration.powerColors[blocks[obstructingBlock].power-1]);
                 move.powerUpBlockPairs.push(blocks[localBlock], blocks[obstructingBlock]);
@@ -1146,7 +1601,7 @@
 
         function updateUserStatistics() {
             document.getElementById("game-score-value").innerHTML = Math.round(statistics.score);
-            document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScore);
+            document.getElementById("game-highest-score-value").innerHTML = Math.round(statistics.highestScores[`grid${configuration.gridSize}`]);
         }
 
         function removeBlock(blockObject) {
@@ -1186,7 +1641,7 @@
         }
 
         function getReadableTextColor(backgroundRGB) {
-            backgroundRGB = extractRGBValues(backgroundRGB);
+            backgroundRGB = getRGBvalues(backgroundRGB);
             R = backgroundRGB[1]*1;
             G = backgroundRGB[2]*1;
             B = backgroundRGB[3]*1;
@@ -1249,6 +1704,19 @@
             }, 10);
             block.element = blockElement;
             return block
+        }
+        
+        if (window.location.href.includes("sweb.cz")) {
+            setTimeout(function() {
+                try {
+                    var banners = document.querySelectorAll("div[id='sklik-banner']");
+                    for (banner of banners) {
+                        banner.style.display = "none";
+                    }
+                } catch (error) {
+                    
+                }
+            }, 100);
         }
 
         function updateBoard(transitions) {
