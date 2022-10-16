@@ -28,7 +28,7 @@
             --background-color: white;
             --text-color: black;
             --pale-color: rgb(230, 230, 230);
-            --box-background: white;
+            --box-background: rgb(255, 255, 255);
             --box-size: 60px;
             --box-margin: 5px;
             --box-scale: scale(0.98);
@@ -646,6 +646,27 @@
 
                         <div class="range-option">
                             <div class="icon">
+                                <div class="color-preview" id="box-color-preview"></div>
+                            </div>
+                            <div class="value">
+                                <div class="title">Box RGB</div>
+                                <div class="input">
+                                    <input class="range" title="Box red color" id="box-R-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="box-R-value" min="0" max="255">
+                                </div>
+                                <div class="input" style="padding: 6px 0;">
+                                    <input class="range" title="Box green color" id="box-G-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="box-G-value" min="0" max="255">
+                                </div>
+                                <div class="input">
+                                    <input class="range" title="Box blue color" id="box-B-range" type="range" min="0" max="255">
+                                    <input class="number" type="number" id="box-B-value" min="0" max="255">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="range-option">
+                            <div class="icon">
                                 <div class="color-preview" id="2power1-color-preview"></div>
                             </div>
                             <div class="value">
@@ -1122,7 +1143,7 @@
 
         Object.assign(unApplyedConfiguration, configuration);
 
-        optionRangeValuePairs = [{optionDOM: "grid-size", optionJS: "gridSize", multiplier: 1}, {optionDOM: "box-margin", optionJS: "boxMargin", multiplier: 0.1}, {optionDOM: "box-border-radius", optionJS: "boxBorderRadius", multiplier: 0.1}, {optionDOM: "transitions", optionJS: "transitions", multiplier: 0.1}]
+        optionRangeValuePairs = [{optionDOM: "grid-size", optionJS: "gridSize", multiplier: 1}, {optionDOM: "box-margin", optionJS: "boxMargin", multiplier: 0.1}, {optionDOM: "box-border-radius", optionJS: "boxBorderRadius", multiplier: 0.1}, {optionDOM: "transitions", optionJS: "transitions", multiplier: 0.1}];
 
         for (pair of optionRangeValuePairs) {
             document.getElementById(`${pair.optionDOM}-range`).addEventListener("input", updateOptionRangeValuePair.bind(null, pair, "range"));
@@ -1138,28 +1159,15 @@
             document.getElementById(`2power${loop}-B-value`).addEventListener("input", updateOptionPowerColorValuePair.bind(null, "value", loop));
         }
 
-        document.getElementById("play-board-R-range").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "range"));
-        document.getElementById("play-board-G-range").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "range"));
-        document.getElementById("play-board-B-range").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "range"));
-        document.getElementById("play-board-R-value").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "value"));
-        document.getElementById("play-board-G-value").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "value"));
-        document.getElementById("play-board-B-value").addEventListener("input", updateOptionPlayBoardBackground.bind(null, "value"));
+        optionPlayBoardColors = [{optionDOM: "play-board", optionJS: "playBoardBackground"}, {optionDOM: "box", optionJS: "boxBackground"}];
 
-        function updateOptionPlayBoardBackground(origin) {
-            if (origin == "range") {
-                applyedTo = "value";
-            } else {
-                applyedTo = "range";
-            }
-            R = document.getElementById(`play-board-R-${origin}`).value;
-            G = document.getElementById(`play-board-G-${origin}`).value;
-            B = document.getElementById(`play-board-B-${origin}`).value;
-            value = `rgb(${R}, ${G}, ${B})`;
-            unApplyedConfiguration.playBoardBackground = value;
-            document.getElementById("play-board-color-preview").style.backgroundColor = value;
-            document.getElementById(`play-board-R-${applyedTo}`).value = R;
-            document.getElementById(`play-board-G-${applyedTo}`).value = G;
-            document.getElementById(`play-board-B-${applyedTo}`).value = B;
+        for (option of optionPlayBoardColors) {
+            document.getElementById(`${option.optionDOM}-R-range`).addEventListener("input", updateOptionPlayBoardColors.bind(null, "range", option));
+            document.getElementById(`${option.optionDOM}-G-range`).addEventListener("input", updateOptionPlayBoardColors.bind(null, "range", option));
+            document.getElementById(`${option.optionDOM}-B-range`).addEventListener("input", updateOptionPlayBoardColors.bind(null, "range", option));
+            document.getElementById(`${option.optionDOM}-R-value`).addEventListener("input", updateOptionPlayBoardColors.bind(null, "value", option));
+            document.getElementById(`${option.optionDOM}-G-value`).addEventListener("input", updateOptionPlayBoardColors.bind(null, "value", option));
+            document.getElementById(`${option.optionDOM}-B-value`).addEventListener("input", updateOptionPlayBoardColors.bind(null, "value", option));
         }
 
         addEventListener("keydown", function(key) {
@@ -1273,18 +1281,20 @@
             document.getElementById(`2power${loop}-B-value`).value = B;
         }
 
-        value = configuration.playBoardBackground;
-        RGB = getRGBvalues(value);
-        R = RGB[1];
-        G = RGB[2];
-        B = RGB[3];
-        document.getElementById("play-board-color-preview").style.backgroundColor = value;
-        document.getElementById(`play-board-R-range`).value = R;
-        document.getElementById(`play-board-G-range`).value = G;
-        document.getElementById(`play-board-B-range`).value = B;
-        document.getElementById(`play-board-R-value`).value = R;
-        document.getElementById(`play-board-G-value`).value = G;
-        document.getElementById(`play-board-B-value`).value = B;
+        for (option of optionPlayBoardColors) {
+            value = configuration[option.optionJS];
+            RGB = getRGBvalues(value);
+            R = RGB[1];
+            G = RGB[2];
+            B = RGB[3];
+            document.getElementById(`${option.optionDOM}-color-preview`).style.backgroundColor = value;
+            document.getElementById(`${option.optionDOM}-R-range`).value = R;
+            document.getElementById(`${option.optionDOM}-G-range`).value = G;
+            document.getElementById(`${option.optionDOM}-B-range`).value = B;
+            document.getElementById(`${option.optionDOM}-R-value`).value = R;
+            document.getElementById(`${option.optionDOM}-G-value`).value = G;
+            document.getElementById(`${option.optionDOM}-B-value`).value = B;
+        }
 
         menu.updateStyle();
         if (window[storage].getItem("storageUsed") == null) {
@@ -1331,6 +1341,23 @@
             boxBorderRadius = ((boardSize/configuration.gridSize)/20)*configuration.boxBorderRadius;
             cssVariables.style.setProperty("--box-border-radius", `${boxBorderRadius}px`);
             document.getElementById("play-board").style.borderRadius = `${Math.pow(configuration.gridSize, 1/2)*boxBorderRadius}px`;
+        }
+
+        function updateOptionPlayBoardColors(origin, option) {
+            if (origin == "range") {
+                applyedTo = "value";
+            } else {
+                applyedTo = "range";
+            }
+            R = document.getElementById(`${option.optionDOM}-R-${origin}`).value;
+            G = document.getElementById(`${option.optionDOM}-G-${origin}`).value;
+            B = document.getElementById(`${option.optionDOM}-B-${origin}`).value;
+            value = `rgb(${R}, ${G}, ${B})`;
+            unApplyedConfiguration[option.optionJS] = value;
+            document.getElementById(`${option.optionDOM}-color-preview`).style.backgroundColor = value;
+            document.getElementById(`${option.optionDOM}-R-${applyedTo}`).value = R;
+            document.getElementById(`${option.optionDOM}-G-${applyedTo}`).value = G;
+            document.getElementById(`${option.optionDOM}-B-${applyedTo}`).value = B;
         }
 
         function updateOptionPowerColorValuePair(origin, power) {
@@ -1413,7 +1440,7 @@
         }
 
         function resetStorage() {
-            configuration = {gridSize: 4, transitions: 1, boxBackground: "white", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
+            configuration = {gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
             window[storage].setItem("configuration", JSON.stringify(configuration));
         }
 
