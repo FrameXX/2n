@@ -81,6 +81,7 @@
             justify-content: center;
             align-items: center;
             user-select: none;
+            font-weight: 600;
             transition: transform 60ms ease-in-out, outline 60ms ease-in-out;
         }
 
@@ -110,6 +111,19 @@
             cursor: grab;
         }
 
+        input[type=checkbox] {
+            cursor: pointer;
+            border-radius: 9px;
+            width: 25px;
+            height: 25px;
+            transition: outline 60ms cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        input[type=checkbox]:active {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
         input[type=number] {
             background-color: var(--pale-color);
             border: none;
@@ -119,6 +133,10 @@
 
         input[type=number]:focus {
             background-color: var(--background-color);
+        }
+
+        button .icon {
+            margin-right: 5px;
         }
 
         [id^=row] {
@@ -211,18 +229,14 @@
             transition: opacity 200ms linear, height 200ms ease-in-out;
         }
 
-        .expand-content {
-            padding: 5px 0 5px 0;
-        }
-
-        .range-option {
+        .range-option, .check-option {
             padding: 12px 0;
             display: flex;
             align-items: center;
             justify-content: left;
         }
 
-        .range-option .icon {
+        .range-option .icon , .check-option .icon {
             width: 40px;
             display: flex;
             align-items: center;
@@ -247,14 +261,36 @@
             flex-direction: column;
         }
 
+        .check-option .value {
+            padding: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+
         .range-option .value .title {
             padding-bottom: 8px;
+        }
+
+        .check-option .value .title {
+            padding-right: 8px;
+            text-align: left;
+            width: 100%;
         }
 
         .range-option .value .input {
             width: 100%;
             display: flex;
             align-items: center;
+        }
+
+        .check-option .value .input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .range-option .value .input .range {
@@ -312,7 +348,8 @@
         }
 
         #play-board {
-            user-select: none;;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
             cursor: pointer;
             margin: 6px;
             border: var(--box-margin) solid var(--play-board-background);
@@ -556,7 +593,7 @@
 
         <!-- relative elements -->
         <div id="game-container">
-            <div class="range-option" style="justify-content: center; padding: 8px 0;">
+            <div class="range-option" style="justify-content: center; padding: 6px 0;">
                 <div class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 0 24 24" width="34px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm7.48 7.16l-5.01-.43-2-4.71c3.21.19 5.91 2.27 7.01 5.14zm-5.07 6.26L12 13.98l-2.39 1.44.63-2.72-2.11-1.83 2.78-.24L12 8.06l1.09 2.56 2.78.24-2.11 1.83.64 2.73zm-2.86-11.4l-2 4.72-5.02.43c1.1-2.88 3.8-4.97 7.02-5.15zM4 12c0-.64.08-1.26.23-1.86l3.79 3.28-1.11 4.75C5.13 16.7 4 14.48 4 12zm3.84 6.82L12 16.31l4.16 2.5c-1.22.75-2.64 1.19-4.17 1.19-1.52 0-2.94-.44-4.15-1.18zm9.25-.65l-1.11-4.75 3.79-3.28c.14.59.23 1.22.23 1.86 0 2.48-1.14 4.7-2.91 6.17z"/></svg>
                 </div>
@@ -565,7 +602,7 @@
                     <div class="input" id="game-highest-score-value" style="font-weight: 600;">0</div>
                 </div>
             </div>
-            <div class="range-option" style="justify-content: center; padding: 8px 0;">
+            <div class="range-option" style="justify-content: center; padding: 6px 0;">
                 <div class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 0 24 24" width="34px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
                 </div>
@@ -630,9 +667,9 @@
                     <svg class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
                 </div>
                 <div id="expand-info-animator" class="expand-animator">
-                    <div class="expand-content" style="text-align: left;" id="expand-info-content">
+                    <div style="text-align: left;" id="expand-info-content">
                         <hr>
-                        <div style="margin: 15px 5px 25px 5px;">Do you know game called 2048? Well this is really the same concept, just with some enhancements here and there.<br>If you don't, just swipe your finger on the play board that looks like grid if you are using a device with touchscreen or use arrow keys or wsad if you are on desktop and you will learn the game quickly. The goal is to get as much score as possible before you fill the whole grid with blocks and cannot move with them anymore. How long that will take depends on how well you manage your blocks and connect them.<br>For added accessibility you can also just tap or click on side of the grid to move blocks.<br> Here in menu you can customize your game and see statistics.</div>
+                        <div style="padding: 10px;">Do you know game called 2048? Well this is really the same concept, just with some enhancements here and there.<br>If you don't, just swipe your finger on the play board that looks like grid if you are using a device with touchscreen or use arrow keys or wsad if you are on desktop and you will learn the game quickly. The goal is to get as much score as possible before you fill the whole grid with blocks and cannot move with them anymore. How long that will take depends on how well you manage your blocks and join them.<br>For added accessibility you can also just tap or click on side of the grid to move blocks.<br> Here in menu you can customize and manage game.</div>
                     </div>
                 </div>
             </div>
@@ -696,6 +733,18 @@
                                 <div class="input">
                                     <input class="range" title="Transitions (animations) multiplier" id="transitions-range" type="range" min="0" max="20">
                                     <input class="number" type="number" id="transitions-value">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="check-option">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 18h2V6H7v12zm4 4h2V2h-2v20zm-8-8h2v-4H3v4zm12 4h2V6h-2v12zm4-8v4h2v-4h-2z"/></svg>
+                            </div>
+                            <div class="value">
+                                <div class="title">Sound effects</div>
+                                <div class="input">
+                                    <input type="checkbox" id="sound-effects-check">
                                 </div>
                             </div>
                         </div>
@@ -1076,7 +1125,7 @@
                 </div>
             </div>
             <hr>
-
+            <button style="margin-top: 15px;" onclick="clearStorage();"><svg class="icon" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="var(--background-color)"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"></path></svg><div>clear cookies</div></button>
             <div id="bottom-menu-fab-placeholder" style="height: 111px;"></div>
         </div>
 
@@ -1088,10 +1137,10 @@
         cssVariables = document.querySelector(":root");
         expanded = {};
         menu = {opened: false, style: null, open() {
-            dimmer = document.getElementById("dimmer");
-            menuElement = document.getElementById("menu");
-            openSvg = document.getElementById("menu-fab-open-svg");
-            closeSvg = document.getElementById("menu-fab-close-svg");
+            var dimmer = document.getElementById("dimmer");
+            var menuElement = document.getElementById("menu");
+            var openSvg = document.getElementById("menu-fab-open-svg");
+            var closeSvg = document.getElementById("menu-fab-close-svg");
             if (this.opened) {
                 menuElement.style.removeProperty("transform")
                 closeSvg.style.opacity = 0;
@@ -1137,9 +1186,9 @@
                 mode = "menu";
             }
         }, updateStyle() {
-            menuFab = document.getElementById("menu-fab");
-            menuElement = document.getElementById("menu");
-            menuForceClosed = false;
+            var menuFab = document.getElementById("menu-fab");
+            var menuElement = document.getElementById("menu");
+            var menuForceClosed = false;
             if (innerWidth > innerHeight && innerWidth > 450 && this.style != "side") {
                 menuFab.style.bottom = "";
                 menuFab.style.top = "25px";
@@ -1269,6 +1318,10 @@
             document.getElementById(`${option.optionDOM}-B-value`).addEventListener("input", updateOptionPlayBoardColors.bind(null, "value", option));
         }
 
+        document.getElementById("sound-effects-check").addEventListener("click", function() {
+            unApplyedConfiguration.soundEffects = document.getElementById("sound-effects-check").checked;
+        })
+
         addEventListener("keydown", function(key) {
             if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(key.code) > -1) {
                 key.preventDefault();
@@ -1327,9 +1380,9 @@
         });
 
         document.getElementById("play-board").addEventListener("click", function() {
-            x = event.clientX-this.getBoundingClientRect().left;
-            y = event.clientY-this.getBoundingClientRect().top;
-            playBoardSize = getComputedStyle(this).width.replace("px", "")*1;
+            var x = event.clientX-this.getBoundingClientRect().left;
+            var y = event.clientY-this.getBoundingClientRect().top;
+            var playBoardSize = getComputedStyle(this).width.replace("px", "")*1;
             if (x > y && playBoardSize-y > x) {
                 moveBlocks("up");
             } else if (y > x && playBoardSize-x > y) {
@@ -1360,40 +1413,7 @@
         //     }
         // }, 20);
 
-        for (pair of optionRangeValuePairs) {
-            document.getElementById(`${pair.optionDOM}-value`).value = configuration[pair.optionJS];
-            updateOptionRangeValuePair(pair, "value");
-        }
-
-        for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
-            value = configuration.powerColors[loop-1];
-            RGB = getRGBvalues(value);
-            R = RGB[1];
-            G = RGB[2];
-            B = RGB[3];
-            document.getElementById(`2power${loop}-color-preview`).style.backgroundColor = value;
-            document.getElementById(`2power${loop}-R-range`).value = R;
-            document.getElementById(`2power${loop}-G-range`).value = G;
-            document.getElementById(`2power${loop}-B-range`).value = B;
-            document.getElementById(`2power${loop}-R-value`).value = R;
-            document.getElementById(`2power${loop}-G-value`).value = G;
-            document.getElementById(`2power${loop}-B-value`).value = B;
-        }
-
-        for (option of optionPlayBoardColors) {
-            value = configuration[option.optionJS];
-            RGB = getRGBvalues(value);
-            R = RGB[1];
-            G = RGB[2];
-            B = RGB[3];
-            document.getElementById(`${option.optionDOM}-color-preview`).style.backgroundColor = value;
-            document.getElementById(`${option.optionDOM}-R-range`).value = R;
-            document.getElementById(`${option.optionDOM}-G-range`).value = G;
-            document.getElementById(`${option.optionDOM}-B-range`).value = B;
-            document.getElementById(`${option.optionDOM}-R-value`).value = R;
-            document.getElementById(`${option.optionDOM}-G-value`).value = G;
-            document.getElementById(`${option.optionDOM}-B-value`).value = B;
-        }
+        setCurrentOptionValues();
 
         menu.updateStyle();
         if (window[storage].getItem("storageUsed") == null) {
@@ -1411,7 +1431,7 @@
         }, 100)
 
         function expandPart(expanderId) {
-            expandContent = document.getElementById(`expand-${expanderId}-content`);
+            var expandContent = document.getElementById(`expand-${expanderId}-content`);
             if (typeof expanded[expanderId] == "undefined") {
                 expanded[expanderId] = false;
             }
@@ -1420,28 +1440,70 @@
                 expandContent.style.display = "block";
                 document.getElementById(`expand-${expanderId}-svg`).style.transform = "scaleY(-100%)";
                 document.getElementById(`expand-${expanderId}-animator`).style.height = (getComputedStyle(expandContent).height.replace("px", "")*1)+5 + "px";
+                expandCompleteTimeout = setTimeout(function() {
+                    document.getElementById(`expand-${expanderId}-animator`).style.height = (getComputedStyle(expandContent).height.replace("px", "")*1)+5 + "px";
+                }, 200);
             } else {
                 expanded[expanderId] = false;
                 document.getElementById(`expand-${expanderId}-svg`).style.removeProperty("transform");
                 document.getElementById(`expand-${expanderId}-animator`).style.removeProperty("height");
+                clearTimeout(expandCompleteTimeout);
                 setTimeout(function() {
                     expandContent.style.display = "none";
                 }, 210);
             }
         }
 
+        function setCurrentOptionValues() {
+            for (pair of optionRangeValuePairs) {
+                document.getElementById(`${pair.optionDOM}-value`).value = configuration[pair.optionJS];
+                updateOptionRangeValuePair(pair, "value");
+            }
+            for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
+                var value = configuration.powerColors[loop-1];
+                var RGB = getRGBvalues(value);
+                var R = RGB[1];
+                var G = RGB[2];
+                var B = RGB[3];
+                document.getElementById(`2power${loop}-color-preview`).style.backgroundColor = value;
+                document.getElementById(`2power${loop}-R-range`).value = R;
+                document.getElementById(`2power${loop}-G-range`).value = G;
+                document.getElementById(`2power${loop}-B-range`).value = B;
+                document.getElementById(`2power${loop}-R-value`).value = R;
+                document.getElementById(`2power${loop}-G-value`).value = G;
+                document.getElementById(`2power${loop}-B-value`).value = B;
+            }
+            for (option of optionPlayBoardColors) {
+                var value = configuration[option.optionJS];
+                var RGB = getRGBvalues(value);
+                var R = RGB[1];
+                var G = RGB[2];
+                var B = RGB[3];
+                document.getElementById(`${option.optionDOM}-color-preview`).style.backgroundColor = value;
+                document.getElementById(`${option.optionDOM}-R-range`).value = R;
+                document.getElementById(`${option.optionDOM}-G-range`).value = G;
+                document.getElementById(`${option.optionDOM}-B-range`).value = B;
+                document.getElementById(`${option.optionDOM}-R-value`).value = R;
+                document.getElementById(`${option.optionDOM}-G-value`).value = G;
+                document.getElementById(`${option.optionDOM}-B-value`).value = B;
+            }
+            document.getElementById("sound-effects-check").checked = configuration.soundEffects;
+        }
+
         function renderPlayBoard() {
             cssVariables.style.setProperty("--box-size", "0");
-            if (innerWidth > innerHeight) {
-                boardSize = innerHeight*0.6;
+            var boardHeight = innerHeight*0.6;
+            var boardWidth = innerWidth*0.7;
+            if (boardHeight < boardWidth) {
+                boardSize = boardHeight;
             } else {
-                boardSize = innerWidth*0.7;
+                boardSize = boardWidth;
             }
-            boxMargin = ((boardSize/configuration.gridSize)/15)*configuration.boxMargin;
+            var boxMargin = ((boardSize/configuration.gridSize)/15)*configuration.boxMargin;
             cssVariables.style.setProperty("--box-margin", `${boxMargin}px`);
             cssVariables.style.setProperty("--box-size", `${(boardSize-(boxMargin*configuration.gridSize*2)-((boxMargin*2)/configuration.gridSize))/configuration.gridSize}px`);
             cssVariables.style.setProperty("--block-font-size", `${(boardSize/configuration.gridSize)/2.5}px`);
-            boxBorderRadius = ((boardSize/configuration.gridSize)/20)*configuration.boxBorderRadius;
+            var boxBorderRadius = ((boardSize/configuration.gridSize)/20)*configuration.boxBorderRadius;
             cssVariables.style.setProperty("--box-border-radius", `${boxBorderRadius}px`);
             document.getElementById("play-board").style.borderRadius = `${Math.pow(configuration.gridSize, 1/2)*boxBorderRadius}px`;
         }
@@ -1452,10 +1514,10 @@
             } else {
                 applyedTo = "range";
             }
-            R = document.getElementById(`${option.optionDOM}-R-${origin}`).value;
-            G = document.getElementById(`${option.optionDOM}-G-${origin}`).value;
-            B = document.getElementById(`${option.optionDOM}-B-${origin}`).value;
-            value = `rgb(${R}, ${G}, ${B})`;
+            var R = document.getElementById(`${option.optionDOM}-R-${origin}`).value;
+            var G = document.getElementById(`${option.optionDOM}-G-${origin}`).value;
+            var B = document.getElementById(`${option.optionDOM}-B-${origin}`).value;
+            var value = `rgb(${R}, ${G}, ${B})`;
             unApplyedConfiguration[option.optionJS] = value;
             document.getElementById(`${option.optionDOM}-color-preview`).style.backgroundColor = value;
             document.getElementById(`${option.optionDOM}-R-${applyedTo}`).value = R;
@@ -1464,8 +1526,10 @@
         }
 
         function clearStorage() {
-            window[storage].clear();
-            location.reload();
+            if (confirm("This action will remove all data and preferences this site saved on your device. Are you sure?")) {
+                window[storage].clear();
+                location.reload();
+            }
         }
 
         function updateOptionPowerColorValuePair(origin, power) {
@@ -1474,10 +1538,10 @@
             } else {
                 applyedTo = "range";
             }
-            R = document.getElementById(`2power${power}-R-${origin}`).value;
-            G = document.getElementById(`2power${power}-G-${origin}`).value;
-            B = document.getElementById(`2power${power}-B-${origin}`).value;
-            value = `rgb(${R}, ${G}, ${B})`;
+            var R = document.getElementById(`2power${power}-R-${origin}`).value;
+            var G = document.getElementById(`2power${power}-G-${origin}`).value;
+            var B = document.getElementById(`2power${power}-B-${origin}`).value;
+            var value = `rgb(${R}, ${G}, ${B})`;
             unApplyedConfiguration.powerColors[power-1] = value;
             document.getElementById(`2power${power}-color-preview`).style.backgroundColor = value;
             document.getElementById(`2power${power}-R-${applyedTo}`).value = R;
@@ -1488,15 +1552,15 @@
 
         function updateOptionRangeValuePair(pair, origin) {
             if (origin == "range") {
-                valueMultiplier = pair.multiplier;
-                DOMMultiplier = 1;
-                applyedTo = "value";
+                var valueMultiplier = pair.multiplier;
+                var DOMMultiplier = 1;
+                var applyedTo = "value";
             } else {
-                valueMultiplier = 1;
-                DOMMultiplier = 1/pair.multiplier;
-                applyedTo = "range";
+                var valueMultiplier = 1;
+                var DOMMultiplier = 1/pair.multiplier;
+                var applyedTo = "range";
             }
-            value = document.getElementById(`${pair.optionDOM}-${origin}`).value*valueMultiplier;
+            var value = document.getElementById(`${pair.optionDOM}-${origin}`).value*valueMultiplier;
             unApplyedConfiguration[pair.optionJS] = value;
             document.getElementById(`${pair.optionDOM}-${applyedTo}`).value = Math.round(value*DOMMultiplier*10)/10;
         }
@@ -1529,6 +1593,9 @@
             Object.assign(configuration, JSON.parse(window[storage].getItem("configuration")));
             Object.assign(blocks, JSON.parse(window[storage].getItem("blocks")));
             Object.assign(statistics, JSON.parse(window[storage].getItem("statistics")));
+            if (typeof configuration.soundEffects == "undefined") {
+                configuration.soundEffects = true;
+            }
         }
 
         function restoreGame() {
@@ -1548,7 +1615,7 @@
         }
 
         function resetStorage() {
-            configuration = {gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
+            configuration = {soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
             window[storage].setItem("configuration", JSON.stringify(configuration));
         }
 
@@ -1564,14 +1631,14 @@
             }
 
             // console.log("writing play board grid");
-            gridContainer = document.getElementById("grid-container");
+            var gridContainer = document.getElementById("grid-container");
             for (row = 0; row < configuration.gridSize; row++) {
-                rowElement = document.createElement("div");
+                var rowElement = document.createElement("div");
                 rowElement.id = `row${row}`;
                 gridContainer.appendChild(rowElement);
                 // console.log(`created row ${row}`);
                 for (box = 0; box < configuration.gridSize; box++) {
-                    boxElement = document.createElement("div");
+                    var boxElement = document.createElement("div");
                     boxElement.id = `box${row}-${box}`;
                     boxElement.setAttribute("class", "box");
                     rowElement.appendChild(boxElement);
@@ -1582,12 +1649,12 @@
 
         function checkMoveOptions(row, column, direction) {
             // console.log(`reading ${row},${column}`);
-            canMove = false;
-            powerUp = false;
-            localBlock = getBlockFromPosition(row, column);
+            var canMove = false;
+            var powerUp = false;
+            var localBlock = getBlockFromPosition(row, column);
             if (localBlock !== false) {
                 // console.log(`found local block ${blocks[localBlock].element.id}`);
-                moveSteps = 1;
+                var moveSteps = 1;
                 obstructingBlock = false;
                 while (obstructingBlock === false && ((direction == "right" && moveSteps+column < configuration.gridSize) || (direction == "up" && row-moveSteps >= 0) || (direction == "left" && column-moveSteps >= 0) || (direction == "down" && moveSteps+row < configuration.gridSize))) {
                     // console.log(`checking move to ${direction} by ${moveSteps}`);
@@ -1666,10 +1733,10 @@
                     break;
             }
             // console.log("moving blocks finalized");
-            blocksLog = "";
-            for (block of blocks) {
-                blocksLog += ` ${block.row}, ${block.column}, ${block.element.id};`;
-            }
+            // blocksLog = "";
+            // for (block of blocks) {
+            //     blocksLog += ` ${block.row}, ${block.column}, ${block.element.id};`;
+            // }
             // console.log(blocksLog);
             if (!move.nothingMoved) {
                 updateBlock(createBlock(1));
@@ -1704,8 +1771,10 @@
                 // console.log(powerUpPairLog);
                 setTimeout(function() {
                     updateUserStatistics();
-                    powerUpBlockPair = move.powerUpBlockPairs[0];
-                    joinAudioEffect.play();
+                    var powerUpBlockPair = move.powerUpBlockPairs[0];
+                    if (configuration.soundEffects) {
+                        joinAudioEffect.play();
+                    }
                     delete powerUpBlockPair.audioEffect;
                     updateBlock(powerUpBlockPair.obstructingBlock);
                     powerUpBlockPair.obstructingBlock.transforms[0] = "scale(1)";
@@ -1748,7 +1817,7 @@
         function removeBlock(blockObject) {
             // console.log(`removing block ${blockObject.element.id}`);
             blockObject.element.remove();
-            blockindex = 0;
+            var blockindex = 0;
             for ([index, block] of blocks.entries()) {
                 if (blockObject == block) {
                     blockIndex = index;
@@ -1759,11 +1828,11 @@
 
         function getBlockFromPosition(row, column) {
             // console.log(`getting block from position ${row}, ${column}`);
-            blockIndex = false;
+            var blockIndex = false;
             for ([index, block] of blocks.entries()) {
                 if (block.row == row && block.column == column) {
                     // console.log(`${block.element.id} has same position of ${row}, ${column}, checking if it isn't about to be removed`);
-                    blockRemoved = false;
+                    var blockRemoved = false;
                     for (blockToRemove of statistics.blocksToRemove) {
                         if (blockToRemove == block) {
                             blockRemoved = true;
@@ -1782,26 +1851,26 @@
         }
 
         function getReadableTextColor(backgroundRGB) {
-            backgroundRGB = getRGBvalues(backgroundRGB);
-            R = backgroundRGB[1]*1;
-            G = backgroundRGB[2]*1;
-            B = backgroundRGB[3]*1;
+            var backgroundRGB = getRGBvalues(backgroundRGB);
+            var R = backgroundRGB[1]*1;
+            var G = backgroundRGB[2]*1;
+            var B = backgroundRGB[3]*1;
             if (R <= 10) {
-                Rg = R/3294;
+                var Rg = R/3294;
             } else {
-                Rg = Math.pow(R/269 + 0.0513, 2.4);
+                var Rg = Math.pow(R/269 + 0.0513, 2.4);
             }
             if (G <= 10) {
-                Gg = G/3294;
+                var Gg = G/3294;
             } else {
-                Gg = Math.pow(G/269 + 0.0513, 2.4);
+                var Gg = Math.pow(G/269 + 0.0513, 2.4);
             }
             if (B <= 10) {
-                Bg = B/3294;
+                var Bg = B/3294;
             } else {
-                Bg = Math.pow(B/269 + 0.0513, 2.4);
+                var Bg = Math.pow(B/269 + 0.0513, 2.4);
             }
-            relativeLumninance = 0.2126 * Rg + 0.7152 * Gg + 0.0722 * Bg;
+            var relativeLumninance = 0.2126 * Rg + 0.7152 * Gg + 0.0722 * Bg;
             if (relativeLumninance < 0.5) {
                 return "white";
             } else {
@@ -1811,16 +1880,16 @@
 
         function createBlock(power) {
             do {
-                startRow = getRandomNumber(0, configuration.gridSize-1);
-                startColumn = getRandomNumber(0, configuration.gridSize-1);
+                var startRow = getRandomNumber(0, configuration.gridSize-1);
+                var startColumn = getRandomNumber(0, configuration.gridSize-1);
             }
             while (getBlockFromPosition(startRow, startColumn) !== false);
-            blockElement = document.createElement("div");
+            var blockElement = document.createElement("div");
             blockElement.id = `block${statistics.blocksCreated}`;
             blockElement.setAttribute("class", "block");
-            boxFromSide = getBoxFromSide(startRow, startColumn);
-            halfBoxSize = cssVariables.style.getPropertyValue("--box-size").replace("px", "")/2;
-            transforms = ["scale(0)", `translate(${boxFromSide[0]}px, ${boxFromSide[1]}px)`];
+            var boxFromSide = getBoxFromSide(startRow, startColumn);
+            var halfBoxSize = cssVariables.style.getPropertyValue("--box-size").replace("px", "")/2;
+            var transforms = ["scale(0)", `translate(${boxFromSide[0]}px, ${boxFromSide[1]}px)`];
             blockElement.style.transform = transforms[0] + " " + transforms[1];
             blockElement.style.transformOrigin = `${(boxFromSide[0]+halfBoxSize)}px ${(boxFromSide[1]+halfBoxSize)}px`;
             document.getElementById("blocks-container").appendChild(blockElement);
@@ -1838,12 +1907,12 @@
         }
 
         function restoreBlock(block) {
-            blockElement = document.createElement("div");
+            var blockElement = document.createElement("div");
             blockElement.id = block.elementId;
             blockElement.setAttribute("class", "block");
-            boxFromSide = getBoxFromSide(block.row, block.column);
-            halfBoxSize = cssVariables.style.getPropertyValue("--box-size").replace("px", "")/2;
-            transforms = ["scale(0)", `translate(${boxFromSide[0]}px, ${boxFromSide[1]}px)`];
+            var boxFromSide = getBoxFromSide(block.row, block.column);
+            var halfBoxSize = cssVariables.style.getPropertyValue("--box-size").replace("px", "")/2;
+            var transforms = ["scale(0)", `translate(${boxFromSide[0]}px, ${boxFromSide[1]}px)`];
             blockElement.style.transform = transforms[0] + " " + transforms[1];
             blockElement.style.transformOrigin = `${(boxFromSide[0]+halfBoxSize)}px ${(boxFromSide[1]+halfBoxSize)}px`;
             blockElement.style.backgroundColor = `var(--power${block.power}-color)`;
@@ -1873,10 +1942,10 @@
         }
 
         function getBoxFromSide(row, column) {
-            originalBoxScale = cssVariables.style.getPropertyValue("--box-scale");
+            var originalBoxScale = cssVariables.style.getPropertyValue("--box-scale");
             cssVariables.style.setProperty("--box-scale", "scale(1)");
-            boxFromLeft = (document.getElementById(`box${row}-${column}`).getBoundingClientRect().left + scrollX)*1;
-            boxFromTop = (document.getElementById(`box${row}-${column}`).getBoundingClientRect().top + scrollY)*1;
+            var boxFromLeft = (document.getElementById(`box${row}-${column}`).getBoundingClientRect().left + scrollX)*1;
+            var boxFromTop = (document.getElementById(`box${row}-${column}`).getBoundingClientRect().top + scrollY)*1;
             cssVariables.style.setProperty("--box-scale", originalBoxScale);
             return [boxFromLeft, boxFromTop];
         }
@@ -1890,8 +1959,8 @@
 
         function updateBlock(block) {
             // console.log(`updating block ${block.element.id}`);
-            boxFromSide = getBoxFromSide(block.row, block.column);
-            halfBoxSize = cssVariables.style.getPropertyValue("--box-size").replace("px", "")/2;
+            var boxFromSide = getBoxFromSide(block.row, block.column);
+            var halfBoxSize = cssVariables.style.getPropertyValue("--box-size").replace("px", "")/2;
             block.element.style.transformOrigin = `${(boxFromSide[0]+halfBoxSize)}px ${(boxFromSide[1]+halfBoxSize)}px`;
             block.transforms[1] = `translate(${boxFromSide[0]}px, ${boxFromSide[1]}px)`;
             block.element.style.transform = block.transforms[0] + " " + block.transforms[1];
@@ -1913,7 +1982,7 @@
         }
 
         function getRandomNumber(from, to) {
-            number = Math.round((Math.random()*(to+1-from))+(from-0.5))*1;
+            var number = Math.round((Math.random()*(to+1-from))+(from-0.5))*1;
             if (number == -0) {
                 number = 0;
             }
