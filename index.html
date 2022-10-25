@@ -1,23 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="en">   
     
     <head>
 
-        <meta charset="UTF-8">
+        <meta charset="UTF-8"/>
         <title>2ⁿ</title>
-        <meta lang="en">
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+        <meta lang="en"/>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover"/>
         <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
         <link rel="icon" type="image/png" sizes="256x256" href="favicon.png"/>
         <meta name="theme-color" content="#000000"/>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap" rel="stylesheet"/>
         <meta property="og:title" content="2ⁿ"/>
-        <meta property="og:description" content="2ⁿ game">
+        <meta property="og:description" content="2ⁿ game"/>
         <meta property="twitter:title" content="2ⁿ"/>
-        <meta property="twitter:description" content="2ⁿ game">
+        <meta property="twitter:description" content="2ⁿ game"/>
     
     </head>
 
@@ -236,6 +235,33 @@
             justify-content: left;
         }
 
+        .setup {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+
+        .setup .name {
+            font-size: 20px;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .setup .actions {
+            padding-right: 10px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .setup .action {
+            margin: 6px;
+            padding: 8px;
+        }
+
         .range-option .icon , .check-option .icon {
             width: 40px;
             display: flex;
@@ -452,6 +478,11 @@
             justify-content: center;
             align-items: center;
             flex-direction: column-reverse;
+        }
+
+        #add-setup {
+            margin-top: 20px;
+            padding: 10px;
         }
 
         @keyframes splash-block1 {
@@ -678,7 +709,7 @@
             <div id="expand-configuration" class="expand-container">
                 <div class="expand-head-container" onclick="expandPart('configuration');">
                     <svg id="expand-configuration-svg" class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
-                    <h2 class="expand-title">Configuration</h2>
+                    <h2 class="expand-title">Settings</h2>
                     <svg class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
                 </div>
                 <div id="expand-configuration-animator" class="expand-animator">
@@ -1125,7 +1156,32 @@
                 </div>
             </div>
             <hr>
-            <button style="margin-top: 15px;" onclick="clearStorage();"><svg class="icon" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="var(--background-color)"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"></path></svg><div>clear cookies</div></button>
+
+            <div id="expand-setups" class="expand-container">
+                <div class="expand-head-container" onclick="expandPart('setups');">
+                    <svg id="expand-setups-svg" class="expand-svg" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
+                    <h2 class="expand-title">Configurations</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--text-color)><g><path d="M0,0h24v24H0V0z" fill="none"/></g><g><g><path d="M4,18v-0.65c0-0.34,0.16-0.66,0.41-0.81C6.1,15.53,8.03,15,10,15c0.03,0,0.05,0,0.08,0.01c0.1-0.7,0.3-1.37,0.59-1.98 C10.45,13.01,10.23,13,10,13c-2.42,0-4.68,0.67-6.61,1.82C2.51,15.34,2,16.32,2,17.35V20h9.26c-0.42-0.6-0.75-1.28-0.97-2H4z"/><path d="M10,12c2.21,0,4-1.79,4-4s-1.79-4-4-4C7.79,4,6,5.79,6,8S7.79,12,10,12z M10,6c1.1,0,2,0.9,2,2s-0.9,2-2,2 c-1.1,0-2-0.9-2-2S8.9,6,10,6z"/><path d="M20.75,16c0-0.22-0.03-0.42-0.06-0.63l1.14-1.01l-1-1.73l-1.45,0.49c-0.32-0.27-0.68-0.48-1.08-0.63L18,11h-2l-0.3,1.49 c-0.4,0.15-0.76,0.36-1.08,0.63l-1.45-0.49l-1,1.73l1.14,1.01c-0.03,0.21-0.06,0.41-0.06,0.63s0.03,0.42,0.06,0.63l-1.14,1.01 l1,1.73l1.45-0.49c0.32,0.27,0.68,0.48,1.08,0.63L16,21h2l0.3-1.49c0.4-0.15,0.76-0.36,1.08-0.63l1.45,0.49l1-1.73l-1.14-1.01 C20.72,16.42,20.75,16.22,20.75,16z M17,18c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S18.1,18,17,18z"/></g></g></svg>
+                </div>
+                <div id="expand-setups-animator" class="expand-animator">
+                    <div id="expand-setups-content">
+                        <hr>
+
+                        <div id="setups">
+
+                        </div>
+
+                        <button title="add setup" id="add-setup" onclick="addSetup()">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            <div>save configuration</div>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <button title="clear cookies" style="margin-top: 15px;" onclick="clearStorage();"><svg class="icon" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="var(--background-color)"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"></path></svg><div>clear cookies</div></button>
             <div id="bottom-menu-fab-placeholder" style="height: 111px;"></div>
         </div>
 
@@ -1162,6 +1218,7 @@
                 }, 310);
                 this.opened = false;
                 mode = "play";
+                applyFastConfiguration();
             } else {
                 dimmer.style.display = "block";
                 setTimeout(function() {
@@ -1252,10 +1309,13 @@
         configuration = {};
         unApplyedConfiguration = {};
         blocks = [];
+        setups = [];
         mode = "play";
         optionPowerColorValuePairsNumber = 15;
         joinAudioEffect = new Audio("join.ogg");
+        stuckAudioEffect = new Audio("stuck.ogg");
         joinAudioEffect.load();
+        stuckAudioEffect.load();
 
         chooseTheme();
         matchMedia('(prefers-color-scheme: dark)').addEventListener("change", chooseTheme);
@@ -1454,6 +1514,11 @@
             }
         }
 
+        function updateExpanderSize(expanderId) {
+            var expandContent = document.getElementById(`expand-${expanderId}-content`);
+            document.getElementById(`expand-${expanderId}-animator`).style.height = (getComputedStyle(expandContent).height.replace("px", "")*1)+5 + "px";
+        }
+
         function setCurrentOptionValues() {
             for (pair of optionRangeValuePairs) {
                 document.getElementById(`${pair.optionDOM}-value`).value = configuration[pair.optionJS];
@@ -1488,6 +1553,121 @@
                 document.getElementById(`${option.optionDOM}-B-value`).value = B;
             }
             document.getElementById("sound-effects-check").checked = configuration.soundEffects;
+            renderSetups();
+        }
+
+        function renderSetups() {
+            setupsHTML = ""
+            for (setup of setups) {
+                setupsHTML += `
+                <div class="setup">
+                    <div class="name">
+                        ${setup.name}
+                    </div>
+                    <div class="actions">
+                        <button class="action" id="delete-${setup.id}" onclick="deleteSetup('${setup.id}')" title="delete setup ${setup.name}">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"/></svg>
+                        </button>
+                        <button class="action" id="edit-${setup.id}" onclick="editSetup('${setup.id}')" title="edit setup ${setup.name}">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+                        </button>
+                        <button class="action" id="edit-${setup.id}" onclick="loadSetup('${setup.id}')" title="load setup ${setup.name}">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill=var(--background-color)><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                `
+            }
+            document.getElementById("setups").innerHTML = setupsHTML;
+        }
+
+        function deleteSetup(id) {
+            for ([index, setup] of setups.entries()) {
+                if (setup.id == id && setup.name != "Default") {
+                    setups.splice(index, 1);
+                    break;
+                } else if (setup.id == id && setup.name == "Default") {
+                    alert(`Deleting configuration named "Default" doesn't sound like a good idea, but if you are eager you can rename the configuraton. Have fun!`);
+                }
+            }
+            window[storage].setItem("setups", JSON.stringify(setups));
+            renderSetups();
+            updateExpanderSize("setups");
+        }
+
+        function editSetup(id) {
+            for ([index, setup] of setups.entries()) {
+                if (setup.id == id) {
+                    setups[index].name = prompt("Change name of the configuration.", setups[index].name);
+                }
+            }
+            window[storage].setItem("setups", JSON.stringify(setups));
+            renderSetups();
+            updateExpanderSize("setups");
+        }
+
+        function loadSetup(id) {
+            if (confirm("Loading a setup will start a new game to fully apply settings like grid size and current game will be lost.")) {
+                for ([index, setup] of setups.entries()) {
+                    if (setup.id == id) {
+                        Object.assign(unApplyedConfiguration, setups[index].configuration);
+                    }
+                }
+                startNewGame();
+                setCurrentOptionValues();
+            }
+        }
+
+        function addSetup() {
+            var name = prompt("Name the configuration. Don't be too crazy with the name or you might regret.");
+            if (name != null) {
+                applyFastConfiguration();
+                setups.push({name: name, id: getRandomId(4), configuration: structuredClone(unApplyedConfiguration)});
+                window[storage].setItem("setups", JSON.stringify(setups));
+                renderSetups();
+                updateExpanderSize("setups");
+            }
+        }
+
+        function getRandomId(characterPairs) {
+            var consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z"];
+            var vowels = ["a", "e", "i", "o", "u", "y"];
+            var id = "";
+            for (loop = 0; loop < characterPairs; loop++) {
+                id = id + consonants[getRandomNumber(0,consonants.length-1)];
+                id = id + vowels[getRandomNumber(0,vowels.length-1)];
+            }
+            return id;
+        }
+
+        function getRandomNumber(bottomIndex, topIndex) {
+            var number = Math.round((Math.random()*(topIndex+1-bottomIndex))+(bottomIndex-0.5))*1;
+            if (number == -0) {
+                number = 0;
+            }
+            return number;
+        }
+
+        function applyFullConfiguration(applyedConfiguration) {
+            Object.assign(configuration, applyedConfiguration);
+            window[storage].setItem("configuration", JSON.stringify(configuration));
+        }
+
+        function applyFastConfiguration() {
+            var currentGridSize = configuration.gridSize;
+            Object.assign(configuration, unApplyedConfiguration);
+            configuration.gridSize = currentGridSize;
+            window[storage].setItem("configuration", JSON.stringify(configuration));
+            setPlayBoardStyles();
+            setBlockColors();
+            renderPlayBoard();
+            updateBoard();
+        }
+
+        function setBlockColors() {
+            for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
+                cssVariables.style.setProperty(`--power${loop}-color`, configuration.powerColors[loop-1]);
+            }
         }
 
         function renderPlayBoard() {
@@ -1566,8 +1746,7 @@
         }
 
         function startNewGame() {
-            Object.assign(configuration, unApplyedConfiguration);
-            window[storage].setItem("configuration", JSON.stringify(configuration));
+            applyFullConfiguration(unApplyedConfiguration);
             statistics = {blocksCreated: 0, hiddenBlocks: [], blocksToRemove: [], score: 0, highestScores: statistics.highestScores, moves: 0, blocksPowered: 0};
             blocks = [];
             if (typeof statistics.highestScores[`grid${configuration.gridSize}`] == "undefined") {
@@ -1576,7 +1755,9 @@
             updateUserStatistics();
             document.getElementById("blocks-container").innerHTML = "";
             document.getElementById("grid-container").innerHTML = "";
-            configureGameSetup();
+            setPlayBoardStyles();
+            setBlockColors();
+            writePlayBoardGrid();
             renderPlayBoard();
             createBlock(1);
             createBlock(1);
@@ -1593,8 +1774,14 @@
             Object.assign(configuration, JSON.parse(window[storage].getItem("configuration")));
             Object.assign(blocks, JSON.parse(window[storage].getItem("blocks")));
             Object.assign(statistics, JSON.parse(window[storage].getItem("statistics")));
+            Object.assign(setups, JSON.parse(window[storage].getItem("setups")));
             if (typeof configuration.soundEffects == "undefined") {
                 configuration.soundEffects = true;
+            }
+            if (setups == []) {
+                setups = [{name: "Default", id: getRandomId(4), configuration: structuredClone(configuration)}];
+                setups.push({name: "Spectral", id: getRandomId(4), configuration: {soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(201, 29, 29)", "rgb(201, 86, 29)", "rgb(201, 143, 29)", "rgb(201, 201, 29)", "rgb(143, 201, 29)", "rgb(86, 201, 29)", "rgb(29, 201, 29)", "rgb(28, 201, 86)", "rgb(28, 202, 144)", "rgb(28, 202, 202)", "rgb(28, 144, 202)", "rgb(28, 86, 202)", "rgb(28, 28, 202)", "rgb(86, 28, 202)", "rgb(144, 28, 202)"]}});
+                window[storage].setItem("setups", JSON.stringify(setups));
             }
         }
 
@@ -1605,7 +1792,9 @@
             updateUserStatistics();
             document.getElementById("blocks-container").innerHTML = "";
             document.getElementById("grid-container").innerHTML = "";
-            configureGameSetup();
+            setPlayBoardStyles();
+            setBlockColors();
+            writePlayBoardGrid();
             renderPlayBoard();
             statistics.hiddenBlocks = [];
             for (block of blocks) {
@@ -1616,20 +1805,13 @@
 
         function resetStorage() {
             configuration = {soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)"]};
+            setups = [{name: "Default", id: getRandomId(4), configuration: structuredClone(configuration)}];
+            setups.push({name: "Spectral", id: getRandomId(4), configuration: {soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(201, 29, 29)", "rgb(201, 86, 29)", "rgb(201, 143, 29)", "rgb(201, 201, 29)", "rgb(143, 201, 29)", "rgb(86, 201, 29)", "rgb(29, 201, 29)", "rgb(28, 201, 86)", "rgb(28, 202, 144)", "rgb(28, 202, 202)", "rgb(28, 144, 202)", "rgb(28, 86, 202)", "rgb(28, 28, 202)", "rgb(86, 28, 202)", "rgb(144, 28, 202)"]}});
             window[storage].setItem("configuration", JSON.stringify(configuration));
+            window[storage].setItem("setups", JSON.stringify(setups));
         }
 
-        function configureGameSetup() {
-            // console.log(`configuring game setup: ${JSON.stringify(configuration)}`);
-
-            // console.log("setting play board styles");
-            cssVariables.style.setProperty("--box-background", `${configuration.boxBackground}`);
-            cssVariables.style.setProperty("--play-board-background", `${configuration.playBoardBackground}`);
-            cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms ease-in-out, left ${120*configuration.transitions}ms ease-in-out, transform ${120*configuration.transitions}ms ease-in-out, background-color ${240*configuration.transitions}ms ease-in-out, color ${240*configuration.transitions}ms ease-in-out`);
-            for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
-                cssVariables.style.setProperty(`--power${loop}-color`, configuration.powerColors[loop-1]);
-            }
-
+        function writePlayBoardGrid() {
             // console.log("writing play board grid");
             var gridContainer = document.getElementById("grid-container");
             for (row = 0; row < configuration.gridSize; row++) {
@@ -1647,15 +1829,21 @@
             }
         }
 
+        function setPlayBoardStyles() {
+            cssVariables.style.setProperty("--box-background", `${configuration.boxBackground}`);
+            cssVariables.style.setProperty("--play-board-background", `${configuration.playBoardBackground}`);
+            cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms ease-in-out, left ${120*configuration.transitions}ms ease-in-out, transform ${120*configuration.transitions}ms ease-in-out, background-color ${240*configuration.transitions}ms ease-in-out, color ${240*configuration.transitions}ms ease-in-out`);
+        }
+
         function checkMoveOptions(row, column, direction) {
             // console.log(`reading ${row},${column}`);
             var canMove = false;
             var powerUp = false;
             var localBlock = getBlockFromPosition(row, column);
+            var obstructingBlock = false;
+            var moveSteps = 1;
             if (localBlock !== false) {
                 // console.log(`found local block ${blocks[localBlock].element.id}`);
-                var moveSteps = 1;
-                obstructingBlock = false;
                 while (obstructingBlock === false && ((direction == "right" && moveSteps+column < configuration.gridSize) || (direction == "up" && row-moveSteps >= 0) || (direction == "left" && column-moveSteps >= 0) || (direction == "down" && moveSteps+row < configuration.gridSize))) {
                     // console.log(`checking move to ${direction} by ${moveSteps}`);
                     switch (direction) {
@@ -1682,7 +1870,6 @@
                         // console.log(`obstructing block has same power of ${blocks[localBlock].power}`);
                         canMove = true;
                         powerUp = true;
-                        blocks[localBlock].element.style.zIndex = 0;
                     } else if (moveSteps > 2) {
                         // console.log(`moving as far as possible before obstructing block`);
                         canMove = true;
@@ -1691,41 +1878,47 @@
                 } else {
                     canMove = true;
                 }
-                if (canMove) {
-                    moveSingleBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps);
-                }
-            }  
+            }
+            return [canMove, localBlock, obstructingBlock, powerUp, direction, moveSteps];
+        }
+
+        function decideBlockMove(row, column, direction) {
+            var moveOptions = checkMoveOptions(row, column, direction);
+            if (moveOptions[0]) {
+                move.moves++;
+                moveSingleBlock(moveOptions[1], moveOptions[2], moveOptions[3], moveOptions[4], moveOptions[5]);
+            }
         }
 
         function moveBlocks(direction) {
             // console.log(`moving blocks ${direction}`);
-            move.nothingMoved = true;
+            move.moves = 0;
             switch (direction) {
                 case "right":
                     for (column = configuration.gridSize-2; column >= 0; column--) {
                         for (row = 0; row < configuration.gridSize; row++) {
-                            checkMoveOptions(row, column, direction);
+                            decideBlockMove(row, column, direction);
                         }
                     }
                     break;
                 case "up":
                     for (row = 1; row < configuration.gridSize; row++) {
                         for (column = 0; column < configuration.gridSize; column++) {
-                            checkMoveOptions(row, column, direction);
+                            decideBlockMove(row, column, direction);
                         }
                     }
                     break;
                 case "left":
                     for (column = 1; column < configuration.gridSize; column++) {
                         for (row = configuration.gridSize-1; row >= 0; row--) {
-                            checkMoveOptions(row, column, direction);
+                            decideBlockMove(row, column, direction);
                         }
                     }
                     break;
                 case "down":
                     for (row = configuration.gridSize-2; row >= 0; row--) {
                         for (column = configuration.gridSize-1; column >= 0; column--) {
-                            checkMoveOptions(row, column, direction);
+                            decideBlockMove(row, column, direction);
                         }
                     }
                     break;
@@ -1738,17 +1931,18 @@
             //     blocksLog += ` ${block.row}, ${block.column}, ${block.element.id};`;
             // }
             // console.log(blocksLog);
-            if (!move.nothingMoved) {
+            if (move.moves > 0) {
                 updateBlock(createBlock(1));
                 statistics.moves++;
+            } else if (configuration.soundEffects) {
+                stuckAudioEffect.play()
             }
             window[storage].setItem("blocks", JSON.stringify(blocks));
             window[storage].setItem("statistics", JSON.stringify(statistics));
         }
 
         function moveSingleBlock(localBlock, obstructingBlock, powerUp, direction, moveSteps) {
-            move.nothingMoved = false;
-            // console.log(`moving block ${blocks[localBlock].element.id} ${direction} by ${moveSteps-1} steps`);
+            // console.log(`moving block ${blocks[localBlock].element.id} ${direction} by ${moveSteps-1} steps to powerUp ${powerUp}`);
             if (powerUp) {
                 blocks[obstructingBlock].power++;
                 statistics.blocksPowered++;
@@ -1758,6 +1952,7 @@
                 }
                 blocks[obstructingBlock].transforms[0] = "scale(1.2)";
                 blocks[obstructingBlock].element.style.transform = blocks[obstructingBlock].transforms[0] + " " + blocks[obstructingBlock].transforms[1];
+                blocks[localBlock].element.style.zIndex = 0;
                 blocks[localBlock].transforms[0] = "scale(0)";
                 blocks[localBlock].element.style.transform = blocks[localBlock].transforms[0] + " " + blocks[localBlock].transforms[1];
                 blocks[obstructingBlock].element.style.backgroundColor = `var(--power${blocks[obstructingBlock].power}-color)`;
@@ -1775,7 +1970,6 @@
                     if (configuration.soundEffects) {
                         joinAudioEffect.play();
                     }
-                    delete powerUpBlockPair.audioEffect;
                     updateBlock(powerUpBlockPair.obstructingBlock);
                     powerUpBlockPair.obstructingBlock.transforms[0] = "scale(1)";
                     powerUpBlockPair.obstructingBlock.element.style.transform = powerUpBlockPair.obstructingBlock.transforms[0] + " " + powerUpBlockPair.obstructingBlock.transforms[1];
@@ -1926,19 +2120,6 @@
             }, 10);
             block.element = blockElement;
             return block
-        }
-        
-        if (window.location.href.includes("sweb.cz")) {
-            setTimeout(function() {
-                try {
-                    var banners = document.querySelectorAll("div[id='sklik-banner']");
-                    for (banner of banners) {
-                        banner.style.display = "none";
-                    }
-                } catch (error) {
-                    
-                }
-            }, 100);
         }
 
         function getBoxFromSide(row, column) {
@@ -2140,6 +2321,32 @@
 
         }(window, document));
 
+    </script>
+
+    <script type="text/javascript">
+        if (window.location.href.includes("sweb.cz")) {
+            setTimeout(function() {
+                try {
+                    var banners = document.querySelectorAll("div[id='sklik-banner']");
+                    for (banner of banners) {
+                        banner.style.display = "none";
+                    }
+                } catch (error) {
+                    
+                }
+            }, 150);
+        } else if (window.location.href.includes("000webhostapp.com")) {
+            // setTimeout(function() {
+            //     try {
+            //         var banners = document.querySelectorAll("div[style='text-align:right;position:fixed;z-index:9999999;bottom:0;width:auto;right:1%;cursor:pointer;line-height:0;display:block!important']");
+            //         for (banner of banners) {
+            //             banner.style.display = "none !important";
+            //         }
+            //     } catch (error) {
+                    
+            //     }
+            // }, 150);
+        }
     </script>
 
 </html>
