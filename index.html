@@ -1839,9 +1839,7 @@
         </div>
 
         <!-- version info -->
-        <div id="version">
-            2.1.1
-        </div>
+        <div id="version">2.1.2</div>
 
     </body>
 
@@ -1919,7 +1917,7 @@
             restoreGame();
         }
 
-        Object.assign(unApplyedConfiguration, configuration);
+        unApplyedConfiguration = structuredClone(configuration);
 
         optionRangeValuePairs = [{optionDOM: "offsetY", optionJS: "offsetY", multiplier: 1}, {optionDOM: "offsetX", optionJS: "offsetX", multiplier: 1}, {optionDOM: "grid-size", optionJS: "gridSize", multiplier: 1}, {optionDOM: "box-margin", optionJS: "boxMargin", multiplier: 0.1}, {optionDOM: "box-border-radius", optionJS: "boxBorderRadius", multiplier: 0.1}, {optionDOM: "transitions", optionJS: "transitions", multiplier: 0.1}];
 
@@ -1942,7 +1940,7 @@
             unApplyedConfiguration[pair.optionJS] = value;
             document.getElementById(`${pair.optionDOM}-${applyedTo}`).value = Math.round(value*DOMMultiplier*10)/10;
 
-            applyPartialConfiguration(unApplyedConfiguration);
+            savePartialConfiguration(unApplyedConfiguration);
         }
 
         for (loop = 1; loop <= optionPowerColorValuePairsNumber; loop++) {
@@ -1972,7 +1970,7 @@
             document.getElementById(`${option.optionDOM}-G-${applyedTo}`).value = G;
             document.getElementById(`${option.optionDOM}-B-${applyedTo}`).value = B;
 
-            applyPartialConfiguration(unApplyedConfiguration);
+            savePartialConfiguration(unApplyedConfiguration);
         }
 
         for (option of optionPlayBoardColors) {
@@ -2001,20 +1999,20 @@
             document.getElementById(`2power${power}-B-${applyedTo}`).value = B;
             // cssVariables.style.setProperty(`--power${power}-color`, value);
 
-            applyPartialConfiguration(unApplyedConfiguration);
+            savePartialConfiguration(unApplyedConfiguration);
         }
 
         // listeners for check boxes
         document.getElementById("shadows-check").addEventListener("click", function() {
             unApplyedConfiguration.shadows = document.getElementById("shadows-check").checked;
 
-            applyPartialConfiguration(unApplyedConfiguration);
+            savePartialConfiguration(unApplyedConfiguration);
         });
 
         document.getElementById("sound-effects-check").addEventListener("click", function() {
             unApplyedConfiguration.soundEffects = document.getElementById("sound-effects-check").checked;
 
-            applyPartialConfiguration(unApplyedConfiguration);
+            savePartialConfiguration(unApplyedConfiguration);
         });
 
         document.getElementById("theme-select").addEventListener("change", function() {
@@ -2022,7 +2020,7 @@
             unApplyedConfiguration.theme = select.value;
             configuration.theme = select.value;
 
-            applyPartialConfiguration(unApplyedConfiguration);
+            savePartialConfiguration(unApplyedConfiguration);
         });
 
         document.getElementById("ignore-grid-size-check").addEventListener("click", function() {
@@ -2273,7 +2271,7 @@
                     }
                     setTimeout(function() {
                         document.getElementById(`${tab}-tab`).style.setProperty("opacity", "1");
-                    }, 10);
+                    }, 20);
                 }, 130);
             }
             if (tab == "statistics") {
@@ -2316,7 +2314,7 @@
             setTimeout(function() {
                 toastElement.style.setProperty("opacity", 1);
                 toastElement.style.setProperty("transform", "translateY(0)");
-            }, 10);
+            }, 20);
             if (typeof toastTimeout == "undefined") {
                 toastTimeout = setTimeout(function() {
                     delete toastTimeout;
@@ -2486,7 +2484,7 @@
                 if (setup.id == id) {
                     var newGameStarted = false;
                     var differentGridSize = setups[index].configuration.gridSize != configuration.gridSize;
-                    Object.assign(unApplyedConfiguration, setups[index].configuration);
+                    unApplyedConfiguration = structuredClone(setups[index].configuration);
                     if (differentGridSize && confirm("This configuration has a different grid size. Start new game with different grid size [confirm] or keep current grid size until new game? [cancel]")) {
                         startNewGame();
                         var newGameStarted = true;
@@ -2532,14 +2530,21 @@
             return number;
         }
 
-        function saveFullConfiguration(applyedConfiguration) {
-            Object.assign(configuration, applyedConfiguration);
+        function saveFullConfiguration(savedConfiguration) {
+            configuration = structuredClone(savedConfiguration);
+            window[storage].setItem("configuration", JSON.stringify(configuration));
+        }
+
+        function savePartialConfiguration(savedConfiguration) {
+            var currentGridSize = configuration.gridSize;
+            configuration = structuredClone(savedConfiguration);
+            configuration.gridSize = currentGridSize;
             window[storage].setItem("configuration", JSON.stringify(configuration));
         }
 
         function applyPartialConfiguration(applyedConfiguration) {
             var currentGridSize = configuration.gridSize;
-            Object.assign(configuration, applyedConfiguration);
+            configuration = structuredClone(applyedConfiguration);
             configuration.gridSize = currentGridSize;
             window[storage].setItem("configuration", JSON.stringify(configuration));
             setPlayBoardStyles();
@@ -2645,12 +2650,12 @@
         }
 
         function restoreStorage() {
-            Object.assign(configuration, JSON.parse(window[storage].getItem("configuration")));
-            Object.assign(blocks, JSON.parse(window[storage].getItem("blocks")));
-            Object.assign(statistics, JSON.parse(window[storage].getItem("statistics")));
-            Object.assign(setups, JSON.parse(window[storage].getItem("setups")));
-            Object.assign(board, JSON.parse(window[storage].getItem("board")));
-            Object.assign(saves, JSON.parse(window[storage].getItem("saves")));
+            configuration = structuredClone(JSON.parse(window[storage].getItem("configuration")));
+            blocks = structuredClone(JSON.parse(window[storage].getItem("blocks")));
+            statistics = structuredClone(JSON.parse(window[storage].getItem("statistics")));
+            setups = structuredClone(JSON.parse(window[storage].getItem("setups")));
+            board = structuredClone(JSON.parse(window[storage].getItem("board")));
+            saves = structuredClone(JSON.parse(window[storage].getItem("saves")));
         }
 
         function restoreGame() {
@@ -3067,7 +3072,7 @@
                 statistics.hiddenBlocks[0].transforms[0] = "scale(1)";
                 statistics.hiddenBlocks[0].element.style.setProperty("transform",  statistics.hiddenBlocks[0].transforms[0] + " " + statistics.hiddenBlocks[0].transforms[1]);
                 statistics.hiddenBlocks.splice(0, 1);
-            }, 50);
+            }, 20);
 
             var previousValue = statistics.blocksCreated;
             statistics.blocksCreated++;
@@ -3086,13 +3091,13 @@
 
                 // restore old global objects
                 blocks = {};
-                Object.assign(blocks, saves[saves.length - 1].blocks);
+                blocks = structuredClone(saves[saves.length - 1].blocks);
                 board = [];
-                Object.assign(board, saves[saves.length - 1].board);
+                board = structuredClone(saves[saves.length - 1].board);
                 var statisticsIgnoreGridSize = statistics.ignoreGridSize;
                 var statisticsBlockMovesUndoed = statistics.blockMovesUndoed;
                 statistics = {};
-                Object.assign(statistics, saves[saves.length - 1].statistics);
+                statistics = structuredClone(saves[saves.length - 1].statistics);
                 statistics.ignoreGridSize = statisticsIgnoreGridSize;
                 statistics.blockMovesUndoed = statisticsBlockMovesUndoed;
 
@@ -3166,7 +3171,7 @@
                 statistics.hiddenBlocks[0].transforms[0] = "scale(1)";
                 statistics.hiddenBlocks[0].element.style.setProperty("transform", statistics.hiddenBlocks[0].transforms[0] + " " + statistics.hiddenBlocks[0].transforms[1]);
                 statistics.hiddenBlocks.splice(0, 1);
-            }, 10);
+            }, 20);
 
             return block;
             
@@ -3186,7 +3191,7 @@
             if (!transitions) {
                 setTimeout(function() {
                     cssVariables.style.setProperty("--block-transitions", `top 0 ease-in-out, left 0 ease-in-out, transform 0 ease-in-out, background-color 0 ease-in-out, color 0 ease-in-out`);
-                }, 10);
+                }, 20);
                 var timeout = 10;
             } else {
                 var timeout = 0;
@@ -3201,7 +3206,7 @@
             if (!transitions) {
                 setTimeout(function() {
                     cssVariables.style.setProperty("--block-transitions", `top ${120*configuration.transitions}ms ease-in-out, left ${120*configuration.transitions}ms ease-in-out, transform ${120*configuration.transitions}ms ease-in-out, background-color ${240*configuration.transitions}ms ease-in-out, color ${240*configuration.transitions}ms ease-in-out`);
-                }, 10);
+                }, 20);
             }
 
         }
