@@ -1839,7 +1839,7 @@
         </div>
 
         <!-- version info -->
-        <div id="version">2.1.2</div>
+        <div id="version">2.1.3</div>
 
     </body>
 
@@ -2269,9 +2269,8 @@
                         }
                         applyPartialConfiguration(unApplyedConfiguration);
                     }
-                    setTimeout(function() {
-                        document.getElementById(`${tab}-tab`).style.setProperty("opacity", "1");
-                    }, 20);
+                    getComputedStyle(document.getElementById(`${tab}-tab`)).opacity;
+                    document.getElementById(`${tab}-tab`).style.setProperty("opacity", "1");
                 }, 130);
             }
             if (tab == "statistics") {
@@ -2311,10 +2310,9 @@
             toastText.innerHTML = message;
             toastIcon.innerHTML = icon;
             toastElement.style.setProperty("display", "flex");
-            setTimeout(function() {
-                toastElement.style.setProperty("opacity", 1);
-                toastElement.style.setProperty("transform", "translateY(0)");
-            }, 20);
+            getComputedStyle(toastElement).opacity;
+            toastElement.style.setProperty("opacity", 1);
+            toastElement.style.setProperty("transform", "translateY(0)");
             if (typeof toastTimeout == "undefined") {
                 toastTimeout = setTimeout(function() {
                     delete toastTimeout;
@@ -3068,11 +3066,10 @@
             blocks[blockId] = {id: blockId, row: startRow, column: startColumn, power: power, element: blockElement, transforms: transforms};
 
             statistics.hiddenBlocks.push(blocks[blockId]);
-            setTimeout(function() {
-                statistics.hiddenBlocks[0].transforms[0] = "scale(1)";
-                statistics.hiddenBlocks[0].element.style.setProperty("transform",  statistics.hiddenBlocks[0].transforms[0] + " " + statistics.hiddenBlocks[0].transforms[1]);
-                statistics.hiddenBlocks.splice(0, 1);
-            }, 20);
+            getComputedStyle(statistics.hiddenBlocks[0].element).opacity;
+            statistics.hiddenBlocks[0].transforms[0] = "scale(1)";
+            statistics.hiddenBlocks[0].element.style.setProperty("transform",  statistics.hiddenBlocks[0].transforms[0] + " " + statistics.hiddenBlocks[0].transforms[1]);
+            statistics.hiddenBlocks.splice(0, 1);
 
             var previousValue = statistics.blocksCreated;
             statistics.blocksCreated++;
@@ -3167,11 +3164,10 @@
             document.getElementById("blocks-container").appendChild(blockElement);
 
             statistics.hiddenBlocks.push(block);
-            setTimeout(function() {
-                statistics.hiddenBlocks[0].transforms[0] = "scale(1)";
-                statistics.hiddenBlocks[0].element.style.setProperty("transform", statistics.hiddenBlocks[0].transforms[0] + " " + statistics.hiddenBlocks[0].transforms[1]);
-                statistics.hiddenBlocks.splice(0, 1);
-            }, 20);
+            getComputedStyle(statistics.hiddenBlocks[0].element).opacity;
+            statistics.hiddenBlocks[0].transforms[0] = "scale(1)";
+            statistics.hiddenBlocks[0].element.style.setProperty("transform", statistics.hiddenBlocks[0].transforms[0] + " " + statistics.hiddenBlocks[0].transforms[1]);
+            statistics.hiddenBlocks.splice(0, 1);
 
             return block;
             
