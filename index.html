@@ -391,7 +391,7 @@
             z-index: 2;
             position: fixed;
             padding: 12px;
-            box-shadow: var(--play-board-shadows);
+            box-shadow: 5px -5px 8px 0px rgba(0,0,0,0.35);
         }
 
         .tab#play-tab {
@@ -1036,7 +1036,7 @@
                                     </div>
                                 </div>
                                 <div class="bottom-descriptor">
-                                    If allowed shadow will be used for blocks, cells and play board.
+                                    If allowed shadow will be used for blocks, cells and play board. <b>May lower performance of transitions.</b>
                                 </div>
 
                                 <div class="check-option">
@@ -1840,10 +1840,13 @@
 
         <!-- version info -->
         <div id="version">
-            2.1.0
+            2.1.1
         </div>
 
     </body>
+
+    <!-- https://github.com/goldfire/howler.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="text/javascript">
 
@@ -1872,12 +1875,9 @@
 
         // setting up global objects
         const cssVariables = document.querySelector(":root");
-        const joinAudioEffect = new Audio("audio/join.ogg");
-        const stuckAudioEffect = new Audio("audio/stuck.ogg");
-        const undoAudioEffect = new Audio("audio/undo.ogg");
-        joinAudioEffect.load();
-        stuckAudioEffect.load();
-        undoAudioEffect.load();
+        const joinAudioEffect = new Howl({src: ["audio/join.ogg"]});
+        const stuckAudioEffect = new Howl({src: ["audio/stuck.ogg"]});
+        const undoAudioEffect = new Howl({src: ["audio/undo.ogg"]});
         const userStatisticsIds = {score: {total: true}, blocksCreated: {total: true}, blocksPowered: {total: true}, moves: {total: true}, highestPower: {total: false}};
         if (navigator.cookieEnabled) {
             storage = "localStorage";
@@ -2677,9 +2677,9 @@
         }
 
         function resetStorage() {
-            configuration = {shadows: true, offsetX: 0, offsetY: 0, theme: "auto", soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)", "rgb(183, 183, 183)", "rgb(153, 153, 153)", "rgb(102, 102, 102)"]};
+            configuration = {shadows: false, offsetX: 0, offsetY: 0, theme: "auto", soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(182, 215, 168)", "rgb(147, 196, 125)", "rgb(106, 168, 79)", "rgb(234, 153, 153)", "rgb(224, 102, 102)", "rgb(204, 0, 0)", "rgb(159, 197, 232)", "rgb(111, 168, 220)", "rgb(61, 133, 198)", "rgb(249, 203, 156)", "rgb(246, 178, 107)", "rgb(230, 145, 56)", "rgb(180, 167, 214)", "rgb(142, 124, 195)", "rgb(103, 78, 167)", "rgb(183, 183, 183)", "rgb(153, 153, 153)", "rgb(102, 102, 102)"]};
             setups = [{name: "Default", id: getRandomId(4), configuration: structuredClone(configuration)}];
-            setups.push({name: "Spectral", id: getRandomId(4), configuration: {shadows: true, offsetX: 0, offsetY: 0, theme: "auto", soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(175, 106, 106)", "rgb(175, 129, 106)", "rgb(175, 152, 106)", "rgb(175, 175, 106)", "rgb(152, 175, 106)", "rgb(129, 175, 106)", "rgb(106, 175, 106)", "rgb(106, 175, 129)", "rgb(106, 175, 152)", "rgb(106, 175, 175)", "rgb(106, 152, 175)", "rgb(106, 129, 175)", "rgb(106, 106, 175)", "rgb(129, 106, 175)", "rgb(152, 106, 175)", "rgb(175, 106, 175)", "rgb(175, 106, 152)", "rgb(175, 106, 129)"]}});
+            setups.push({name: "Spectral", id: getRandomId(4), configuration: {shadows: false, offsetX: 0, offsetY: 0, theme: "auto", soundEffects: true, gridSize: 4, transitions: 1, boxBackground: "rgb(255, 255, 255)", boxBorderRadius: 1, boxMargin: 1, playBoardBackground: "rgb(40, 40, 40)", powerColors: ["rgb(175, 106, 106)", "rgb(175, 129, 106)", "rgb(175, 152, 106)", "rgb(175, 175, 106)", "rgb(152, 175, 106)", "rgb(129, 175, 106)", "rgb(106, 175, 106)", "rgb(106, 175, 129)", "rgb(106, 175, 152)", "rgb(106, 175, 175)", "rgb(106, 152, 175)", "rgb(106, 129, 175)", "rgb(106, 106, 175)", "rgb(129, 106, 175)", "rgb(152, 106, 175)", "rgb(175, 106, 175)", "rgb(175, 106, 152)", "rgb(175, 106, 129)"]}});
             window[storage].setItem("configuration", JSON.stringify(configuration));
             window[storage].setItem("setups", JSON.stringify(setups));
             defineBaseUserStatistics();
@@ -3067,7 +3067,7 @@
                 statistics.hiddenBlocks[0].transforms[0] = "scale(1)";
                 statistics.hiddenBlocks[0].element.style.setProperty("transform",  statistics.hiddenBlocks[0].transforms[0] + " " + statistics.hiddenBlocks[0].transforms[1]);
                 statistics.hiddenBlocks.splice(0, 1);
-            }, 10);
+            }, 50);
 
             var previousValue = statistics.blocksCreated;
             statistics.blocksCreated++;
@@ -3079,7 +3079,7 @@
         function undoBlockMove() {
             if (saves.length >= 1 && statistics.blockMovesUndoed < 3) {
                 if (configuration.soundEffects) {
-                    undoAudioEffect.play()
+                    undoAudioEffect.play();
                 }
 
                 var previousBlocks = structuredClone(JSON.parse(JSON.stringify(blocks)));
