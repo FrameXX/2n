@@ -1,0 +1,19 @@
+{
+    "name": "2ⁿ",
+    "short_name": "2ⁿ game",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#282828",
+    "theme_color": "#282828",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "favicon.svg",
+        "type": "image/svg+xml"
+      },
+      {
+        "src": "favicon.png",
+        "type": "image/png", "sizes": "256x256"
+      }
+    ]
+  }
