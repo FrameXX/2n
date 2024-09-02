@@ -1,6 +1,4 @@
-# <img src="https://jiri-kral.web.app/2n/favicon.png" alt="logo" height="40px"/> 2ⁿ
-
-Currently availible on [https://jiri-kral.web.app/2n/index.html](https://jiri-kral.web.app/2n/index.html).
+# <img src="favicon.svg" alt="logo" height="40px"/> 2ⁿ
 
 Do you know game called 2048? Well this is really the same concept, just with some enhancements here and there. Tutorials are boring. This is a trivial game and you will learn while playing. This text is here for people who want to care. Move to the play tab via bottom bar.
 
